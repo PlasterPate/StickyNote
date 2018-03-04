@@ -20,12 +20,9 @@ namespace HW2
             string[] splitted = number_str.Split();
             // create an ineger array to save numbers as integers
             int[] numbers = new int[splitted.Length];
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                // convert string numbers in splitted array to integers and put them in the numbers array
-                numbers[i] = int.Parse(splitted[i]);
-            }
-
+            // pass the splitted array(which have string numbers) and numbers array(empty)
+            // to the method to convert numbers from string to integer
+            str_to_int(splitted, numbers);
             // number entered by user to be checked
             int input_num;
             // get numbers for check from user until -1 is entered
@@ -37,6 +34,19 @@ namespace HW2
                 if (input_num == -1)
                     break;
             } while (input_num != -1);
+        }
+        /// <summary>
+        /// gets two arrays.one string and one int
+        /// converts string numbers in string array to integers and put them in the int array 
+        /// </summary>
+        /// <param name="str_arr">string array</param>
+        /// <param name="int_arr">integer array which is going to fill with str_arr indexes converted to integer</param>
+        public static void str_to_int(string[] str_arr, int[] int_arr)
+        {
+            for (int i = 0; i < int_arr.Length; i++)
+            {
+                int_arr[i] = int.Parse(str_arr[i]);
+            }
         }
         /// <summary>
         /// calculates the probability of selecting a number in a list of numbers in a random selection
