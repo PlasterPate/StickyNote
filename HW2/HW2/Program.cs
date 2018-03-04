@@ -17,8 +17,7 @@ namespace HW2
             // a variable for taking numbers as a string in one line
             string number_str = Console.ReadLine();
             // break string into numbers which were separated by space and put them in the indexes of this array
-            number_str.Trim(' ');
-            string[] splitted = number_str.Split(' ');
+            string[] splitted = number_str.Split();
             // create an ineger array to save numbers as integers
             int[] numbers = new int[splitted.Length];
             for (int i = 0; i < numbers.Length; i++)
