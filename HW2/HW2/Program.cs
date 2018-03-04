@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,22 +14,29 @@ namespace HW2
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            // create an array of integers with 8 indexes
-            int[] numbers = new int[8];
-            for (int i = 0; i < 8; i++)
+            // a variable for taking numbers as a string in one line
+            string number_str = Console.ReadLine();
+            // break string into numbers which were separated by space and put them in the indexes of this array
+            number_str.Trim(' ');
+            string[] splitted = number_str.Split(' ');
+            // create an ineger array to save numbers as integers
+            int[] numbers = new int[splitted.Length];
+            for (int i = 0; i < numbers.Length; i++)
             {
-                // gets each number of array from user as a string and converts it to integer
-                numbers[i] = int.Parse(Console.ReadLine());
+                // convert string numbers in splitted array to integers and put them in the numbers array
+                numbers[i] = int.Parse(splitted[i]);
             }
+
             // number entered by user to be checked
             int input_num;
             // get numbers for check from user until -1 is entered
             do
             {
                 input_num = int.Parse(Console.ReadLine());
+                Console.WriteLine(random_prob(numbers, input_num));
                 // this condition prevents program from calculating probability of -1
-                if (input_num != -1)
-                    Console.WriteLine(random_prob(numbers, input_num));
+                if (input_num == -1)
+                    break;
             } while (input_num != -1);
         }
         /// <summary>
@@ -50,7 +56,7 @@ namespace HW2
                 if (input_num == number)
                     input_counter++;
             }
-            double input_prob = input_counter / 8;
+            double input_prob = input_counter / numbers.Length;
             return input_prob;
         }
     }
