@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace HW2
         static void Main(string[] args)
         {
             // a variable for taking numbers as a string in one line
-            string number_str = Console.ReadLine();
+            string number_str = input(Console.In);
             // break string into numbers which were separated by space and put them in the indexes of this array
             string[] splitted = number_str.Split();
             // create an ineger array to save numbers as integers
@@ -28,12 +29,29 @@ namespace HW2
             // get numbers for check from user until -1 is entered
             do
             {
-                input_num = int.Parse(Console.ReadLine());
-                Console.WriteLine(random_prob(numbers, input_num));
+                // get number from user and convert them to int
+                input_num = int.Parse(input(Console.In));
+                output(Console.Out, numbers, input_num);
                 // this condition prevents program from calculating probability of -1
                 if (input_num == -1)
                     break;
             } while (input_num != -1);
+        }
+        /// <summary>
+        /// gets a string from user
+        /// </summary>
+        /// <param name="reader">stream of text which we want to read from it</param>
+        /// <returns>returns the string entered by user</returns>
+        public static string input(TextReader reader) => reader.ReadLine();
+        /// <summary>
+        /// write the number calculated by random_prob method
+        /// </summary>
+        /// <param name="writer">stream of text which we want to write something on it</param>
+        /// <param name="arr">the array that is going to be passed to random_prob method</param>
+        /// <param name="num">the number that is going to be passed to random_prob method</param>
+        public static void output(TextWriter writer, int[] arr, int num)
+        {
+            writer.WriteLine(random_prob(arr, num));
         }
         /// <summary>
         /// gets two arrays.one string and one int

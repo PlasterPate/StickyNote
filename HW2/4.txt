@@ -1,0 +1,37 @@
+﻿[3/5/2018 10:22:16 Informational] ------ Load Playlist started ------
+[3/5/2018 10:22:16 Informational] ========== Load Playlist finished (0:00:00) ==========
+[3/5/2018 10:22:16 Informational] ------ Discover test started ------
+[3/5/2018 10:22:19 Informational] ========== Discover test finished: 0 found (0:00:03.5361665) ==========
+[3/5/2018 10:46:00 Informational] ------ Discover test started ------
+[3/5/2018 10:46:01 Informational] ========== Discover test finished: 2 found (0:00:00.922045) ==========
+[3/5/2018 10:46:01 Informational] ------ Run test started ------
+[3/5/2018 10:46:03 Informational] ========== Run test finished: 2 run (0:00:01.4784812) ==========
+[3/5/2018 11:11:54 Informational] ------ Discover test started ------
+[3/5/2018 11:11:55 Informational] ========== Discover test finished: 3 found (0:00:00.6913116) ==========
+[3/5/2018 11:11:55 Informational] ------ Run test started ------
+[3/5/2018 11:11:56 Informational] ========== Run test finished: 3 run (0:00:01.1457495) ==========
+[3/5/2018 11:12:21 Informational] ------ Discover test started ------
+[3/5/2018 11:12:22 Informational] ========== Discover test finished: 3 found (0:00:00.6699884) ==========
+[3/5/2018 11:12:22 Informational] ------ Run test started ------
+[3/5/2018 11:12:23 Informational] ========== Run test finished: 1 run (0:00:00.8927316) ==========
+[3/5/2018 11:12:51 Informational] ------ Discover test started ------
+[3/5/2018 11:12:52 Informational] ========== Discover test finished: 3 found (0:00:00.6419299) ==========
+[3/5/2018 11:12:52 Informational] ------ Run test started ------
+[3/5/2018 11:12:53 Informational] ========== Run test finished: 3 run (0:00:01.0855059) ==========
+[3/5/2018 11:16:20 Informational] ------ Discover test started ------
+[3/5/2018 11:16:21 Informational] ========== Discover test finished: 3 found (0:00:00.6471261) ==========
+[3/5/2018 11:16:21 Informational] ------ Run test started ------
+[3/5/2018 11:16:22 Informational] ========== Run test finished: 3 run (0:00:01.0867463) ==========
+[3/5/2018 11:17:03 Informational] ------ Discover test started ------
+[3/5/2018 11:17:04 Informational] ========== Discover test finished: 3 found (0:00:00.6385783) ==========
+[3/5/2018 11:17:04 Informational] ------ Run test started ------
+[3/5/2018 11:17:05 Informational] ========== Run test finished: 1 run (0:00:00.8394444) ==========
+[3/5/2018 11:19:30 Warning] The build was canceled or Failed.
+[3/5/2018 11:25:37 Informational] ------ Discover test started ------
+[3/5/2018 11:25:38 Informational] ========== Discover test finished: 3 found (0:00:00.6371068) ==========
+[3/5/2018 11:25:38 Informational] ------ Run test started ------
+[3/5/2018 11:25:39 Informational] ========== Run test finished: 3 run (0:00:01.0784143) ==========
+[3/5/2018 11:26:20 Informational] ------ Discover test started ------
+[3/5/2018 11:26:21 Informational] ========== Discover test finished: 3 found (0:00:00.6688988) ==========
+[3/5/2018 11:26:21 Informational] ------ Run test started ------
+[3/5/2018 11:26:22 Informational] ========== Run test finished: 3 run (0:00:01.0047311) ==========
