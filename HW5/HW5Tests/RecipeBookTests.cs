@@ -46,7 +46,7 @@ namespace Assignment5.Tests
             Assert.IsFalse(recipeBookTest.Add(recipeTest));
         }
 
-        [TestMethod()]
+        /*[TestMethod()]
         public void RemoveTest()
         {
             for (int i = 0; i < capacity; i++)
@@ -55,7 +55,7 @@ namespace Assignment5.Tests
             Assert.IsTrue(recipeBookTest.Remove(recipeTest.Title));
             Assert.IsTrue(recipeBookTest.Remove(recipeTest.Title));
             Assert.IsFalse(recipeBookTest.Remove(recipeTest.Title));
-        }
+        }*/
 
         [TestMethod()]
         public void LookupByTitleTest()
