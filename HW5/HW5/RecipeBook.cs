@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,14 +46,14 @@ namespace Assignment5
 
 
         /// <summary>
-        /// حذف دستور پخت
+        /// حذف دستور پختs
         /// </summary>
         /// <param name="recipeTitle">عنوان دستور پخت</param>
         /// <returns>آیا حذف دستور پخت درست انجام شد؟</returns>
         public bool Remove(string recipeTitle)
         {
             Console.Clear();
-            for (int i = 0; recipeList[i] != null; i++)
+            for (int i = 0; i < recipeList.Length && recipeList[i] != null; i++)
             {
                 if (recipeList[i].Title == recipeTitle)
                 {
@@ -78,7 +77,7 @@ namespace Assignment5
         /// <returns>شیء دستور پخت</returns>
         public Recipe LookupByTitle(string title)
         {
-            for (int i = 0; recipeList[i] != null; i++)
+            for (int i = 0; i < recipeList.Length && recipeList[i] != null; i++)
             {
                 if (recipeList[i].Title == title)
                     return recipeList[i];
@@ -96,7 +95,7 @@ namespace Assignment5
         {
             Recipe[] keywordResult = new Recipe[recipeList.Length];
             int counter = 0;
-            for (int i = 0; recipeList[i] != null; i++)
+            for (int i = 0; i < recipeList.Length && recipeList[i] != null; i++)
             {
                 foreach (string _keyword in recipeList[i].Keywords)
                 {
@@ -123,7 +122,7 @@ namespace Assignment5
         {
             Recipe[] cuisineResult = new Recipe[recipeList.Length];
             int counter = 0;
-            for (int i = 0; recipeList[i] != null; i++)
+            for (int i = 0; i < recipeList.Length && recipeList[i] != null; i++)
             {
                 if (recipeList[i].Cuisine == cuisine)
                 {
@@ -162,8 +161,31 @@ namespace Assignment5
                 $"Instructions: {recipe.Instructions}";
         }
 
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                title = value;
+            }
+        }
 
-        public int Capacity { get { return capacity; } set { } }
+        public int Capacity
+        {
+            get
+            {
+                return capacity;
+            }
+            set
+            {
+                if (value > 0)
+                    capacity = value;
+                else
+                    capacity = 0;
+            }
+        }
     }
 }

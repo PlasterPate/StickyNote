@@ -151,7 +151,7 @@ namespace Assignment5
         public string IngredientsList()
         {
             string[] ingredientsNames = new string[Ingredients.Length];
-            for (int i = 0; i < Ingredients.Length; i++)
+            for (int i = 0; i < ingredients.Length; i++)
             {
                 ingredientsNames[i] = Ingredients[i].Name;
             }
@@ -197,7 +197,10 @@ namespace Assignment5
             }
             set
             {
-                ingredientCount = value;
+                if (value > 0)
+                    ingredientCount = value;
+                else
+                    ingredientCount = 0;
             }
         }
         public int ServingCount
@@ -210,6 +213,8 @@ namespace Assignment5
             {
                 if (value > 0)
                     servingCount = value;
+                else
+                    servingCount = 0;
             }
         }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,7 +38,11 @@ namespace Assignment5
                             try
                             {
                                 ingredientsCountTemp = int.Parse(Console.ReadLine());
-                                isValid = true;
+                                Console.Clear();
+                                if (ingredientsCountTemp > 0)
+                                    isValid = true;
+                                else
+                                    Console.WriteLine("The Recipe needs at least 1 ingredient");
                             }
                             catch
                             {
@@ -47,7 +50,6 @@ namespace Assignment5
                                 Console.WriteLine("Please enter a valid number!");
                             }
                         } while (isValid == false);
-                        Console.Clear();
                         Console.WriteLine("How many people is this recipe going to serve for?");
                         int servingCountTemp = 0;
                         isValid = false;
