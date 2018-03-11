@@ -118,7 +118,9 @@ namespace Assignment5
                         Console.Clear();
                         Console.WriteLine("Delete Recipe");
                         Console.WriteLine("Enter Recipe Title to delete");
-                        fromMom.Remove(Console.ReadLine());
+                        string deletedTitle = Console.ReadLine();
+                        Console.Clear();
+                        fromMom.Remove(deletedTitle);
                         break;
                     case ConsoleKey.S:
                         Console.Clear();

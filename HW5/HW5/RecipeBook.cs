@@ -52,7 +52,6 @@ namespace Assignment5
         /// <returns>آیا حذف دستور پخت درست انجام شد؟</returns>
         public bool Remove(string recipeTitle)
         {
-            //Console.Clear();
             for (int i = 0; i < recipeList.Length && recipeList[i] != null; i++)
             {
                 if (recipeList[i].Title == recipeTitle)
