@@ -51,8 +51,9 @@ namespace Assignment5.Tests
         {
             for (int i = 0; i < capacity; i++)
                 recipeBookTest.Add(recipeTest);
-            for (int i = 0; i < capacity; i++)
-                Assert.IsTrue(recipeBookTest.Remove(recipeTest.Title));
+            //for (int i = 0; i < capacity; i++)
+            Assert.IsTrue(recipeBookTest.Remove(recipeTest.Title));
+            Assert.IsTrue(recipeBookTest.Remove(recipeTest.Title));
             Assert.IsFalse(recipeBookTest.Remove(recipeTest.Title));
         }
 
