@@ -94,7 +94,7 @@ namespace Assignment5
         public bool RemoveIngredient(string name)
         {
             // بر عهده دانشجو
-            for (int i = 0; i < Ingredients.Length; i++)
+            for (int i = 0; i < Ingredients.Length && ingredients[i] != null; i++)
             {
                 if (Ingredients[i].Name == name)
                 {
@@ -121,7 +121,6 @@ namespace Assignment5
                 Ingredients[i].Quantity *= newServingCount / ServingCount;
             }
             ServingCount = newServingCount;
-
         }
 
         /// <summary>
@@ -151,7 +150,7 @@ namespace Assignment5
         public string IngredientsList()
         {
             string[] ingredientsNames = new string[Ingredients.Length];
-            for (int i = 0; i < ingredients.Length; i++)
+            for (int i = 0; i < ingredients.Length ; i++)
             {
                 ingredientsNames[i] = Ingredients[i].Name;
             }

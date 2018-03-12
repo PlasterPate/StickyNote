@@ -28,7 +28,6 @@ namespace Assignment5.Tests
         static string unit = "unitTest";
         static Ingredient ingredientTest = new Ingredient(name, description, quantity, unit);
         static Ingredient[] ingredientArrayTest = new Ingredient[ingredientCount] { ingredientTest };
-        //ingredientArrayTest[0] = ingredientTest;
         static Recipe recipeTest = new Recipe(title, instructions, ingredientArrayTest, servingCount, cuisine, keywords);
         static Recipe[] searchArray = new Recipe[capacity];
         [TestMethod()]
