@@ -41,7 +41,6 @@ namespace Assignment5
                 }
             }
             return false;
-
         }
 
 
@@ -158,6 +157,27 @@ namespace Assignment5
                 $"Serving count: {recipe.ServingCount}\n" +
                 $"Cuisine: {recipe.Cuisine}\n" +
                 $"Instructions: {recipe.Instructions}";
+        }
+
+        public void ListShow()
+        {
+            for (int i = 0; RecipeList[i] != null; i++)
+            {
+                Console.WriteLine($"{i + 1}.{RecipeList[i].Title}");
+            }
+            if (RecipeList[0] == null)
+                Console.WriteLine("Empty!");
+            Console.WriteLine();
+        }
+
+        public int RecipeCount()
+        {
+            int i = 0;
+            while(i < recipeList.Length && RecipeList[i] != null)
+            {
+                i++;
+            }
+            return i;
         }
 
         public string Title
