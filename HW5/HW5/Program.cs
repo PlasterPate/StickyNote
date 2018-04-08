@@ -119,6 +119,7 @@ namespace Assignment5
                         Console.Clear();
                         Console.WriteLine("Recipe Added Successfully");
                         fromMom.Add(recipeTemp);
+                        Console.WriteLine(recipeTemp.ToString());
                         break;
                     // Delete recipe by name
                     case ConsoleKey.D:
