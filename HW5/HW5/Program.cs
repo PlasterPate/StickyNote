@@ -15,7 +15,7 @@ namespace Assignment5
             ConsoleKeyInfo cki;
             do
             {
-                Console.WriteLine($"Press N(ew), D(el), S(earch)or L(ist)");
+                Console.WriteLine($"Press (N)ew, (D)el, (S)earch, (L)ist, sa(V)e or l(O)ad");
                 cki = Console.ReadKey();
                 Console.WriteLine();
                 switch (cki.Key)
@@ -119,7 +119,6 @@ namespace Assignment5
                         Console.Clear();
                         Console.WriteLine("Recipe Added Successfully");
                         fromMom.Add(recipeTemp);
-                        Console.WriteLine(recipeTemp.ToString());
                         break;
                     // Delete recipe by name
                     case ConsoleKey.D:
@@ -233,6 +232,12 @@ namespace Assignment5
                             Console.Clear();
                         break;
                     // Exit
+                    case ConsoleKey.V:
+                        fromMom.Save(Recipe.RecipeFilePath);
+                        break;
+                    case ConsoleKey.O:
+                        fromMom.Load(Recipe.RecipeFilePath);
+                        break;
                     case ConsoleKey.Escape:
                         Console.WriteLine("Esc");
                         break;

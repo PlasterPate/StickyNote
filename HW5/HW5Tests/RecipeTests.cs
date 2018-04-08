@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Assignment5.Tests
 {
@@ -93,6 +94,27 @@ namespace Assignment5.Tests
                 $"ingredients: {recipeTest1.IngredientsList()}\n" +
                 $"{instructions}";
             Assert.AreEqual(expectedResult, recipeTest1.ToString());
+        }
+
+        [TestMethod()]
+        public void SerializeAndDeserilalizeTest()
+        {
+            string recFilePath = @"recipesTest.txt";
+            Recipe recDeserialized;
+            using (StreamWriter writer = new StreamWriter(recFilePath))
+            {
+                recipeTest1.Serialize(writer);
+            }
+            using (StreamReader reader = new StreamReader(recFilePath))
+            {
+                recDeserialized = Recipe.Deserialize(reader);
+            }
+            Assert.AreEqual(title, recDeserialized.Title);
+            Assert.AreEqual(instructions, recDeserialized.Instructions);
+            Assert.AreEqual(ingredientArrayTest.Length, recDeserialized.Ingredients.Length);
+            Assert.AreEqual(servingCount, recDeserialized.ServingCount);
+            Assert.AreEqual(cuisine, recDeserialized.Cuisine);
+            CollectionAssert.AreEqual(keywords, recDeserialized.Keywords);
         }
     }
 }

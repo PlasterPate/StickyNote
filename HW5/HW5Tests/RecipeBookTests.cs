@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Assignment5.Tests
 {
@@ -97,6 +98,21 @@ namespace Assignment5.Tests
                 $"Cuisine: {cuisine}\n" +
                 $"Instructions: {instructions}";
             Assert.AreEqual(expectedResult, recipeBookTest.SearchResult(recipeTest));
+        }
+
+        [TestMethod()]
+        public void SaveTest()
+        {
+            string recFilePath = @"recipesTest.txt";
+            recipeBookTest.Save(recFilePath);
+            Assert.IsTrue(File.Exists(recFilePath));
+        }
+
+        [TestMethod()]
+        public void LoadTest()
+        {
+            string recFilePath = @"recipesTest.txt";
+            Assert.IsTrue(recipeBookTest.Load(recFilePath));
         }
     }
 }

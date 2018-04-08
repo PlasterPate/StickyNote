@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Assignment5.Tests
 {
@@ -30,6 +31,25 @@ namespace Assignment5.Tests
         {
             string expectedResult = $"{name}:\t{quantity} {unit} - {description}";
             Assert.AreEqual(expectedResult, ingredientTest.ToString());
+        }
+
+        [TestMethod()]
+        public void SerializeAndDeserilalizeTest()
+        {
+            string ingFilePath = @"ingredientsTest.txt";
+            Ingredient ingDeserialized;
+            using(StreamWriter writer = new StreamWriter(ingFilePath))
+            {
+                ingredientTest.Serialize(writer);
+            }
+            using(StreamReader reader = new StreamReader(ingFilePath))
+            {
+                ingDeserialized = Ingredient.Deserialize(reader);
+            }
+            Assert.AreEqual(name, ingDeserialized.Name);
+            Assert.AreEqual(description, ingDeserialized.Description);
+            Assert.AreEqual(quantity, ingDeserialized.Quantity);
+            Assert.AreEqual(unit, ingDeserialized.Unit);
         }
     }
 }

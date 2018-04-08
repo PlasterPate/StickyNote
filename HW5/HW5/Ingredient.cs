@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace Assignment5
     /// </summary>
     public class Ingredient
     {
+        private static string ingFilePath = @"ingredients.txt";
         private string name;
         private string description;
         private double quantity;
@@ -28,6 +30,36 @@ namespace Assignment5
             this.quantity = quantity;
             this.unit = unit;
             // بر عهده دانشجو
+        }
+
+        public void Serialize(StreamWriter writer)
+        {
+            writer.WriteLine(Name);
+            writer.WriteLine(Description);
+            writer.WriteLine(Quantity);
+            writer.WriteLine(Unit);
+        }
+
+        public static Ingredient Deserialize(StreamReader reader)
+        {
+            string name = reader.ReadLine();
+            string des = reader.ReadLine();
+            double quantity = double.Parse(reader.ReadLine());
+            string unit = reader.ReadLine();
+            Ingredient ing = new Ingredient(name, des, quantity, unit);
+            return ing;
+        }
+
+        public static string IngFilePath
+        {
+            get
+            {
+                return ingFilePath;
+            }
+            set
+            {
+                return;
+            }
         }
 
         /// <summary>

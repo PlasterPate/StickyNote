@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,7 +62,18 @@ namespace Assignment5
                     }
                     recipeList[recipeList.Length - 1] = null;
                     Console.WriteLine("Recipe Deleted Successfully");
-                    return true;
+                    File.Delete(Recipe.RecipeFilePath);
+                    using (StreamWriter writer = new StreamWriter(Recipe.RecipeFilePath))
+                    {
+                        foreach(var rec in RecipeList)
+                        {
+                            if(rec != null)
+                            {
+                                rec.Serialize(writer);
+                            }
+                        }
+                    }
+                        return true;
                 }
             }
             Console.WriteLine("No Recipes Found!");
@@ -132,6 +144,59 @@ namespace Assignment5
                 return cuisineResult;
             Console.WriteLine("No Recipes Found!");
             return null;
+        }
+        /// <summary>
+        /// ذخیره لیست دستور پخت غذاها در فایل.
+        /// </summary>
+        /// <param name="receipeFilePath">آدرس فایل</param>
+        public void Save(string receipeFilePath)
+        {
+            using (StreamWriter writer = new StreamWriter(receipeFilePath, false, Encoding.UTF8))
+            {
+                writer.WriteLine(RecipeList.Length);
+                foreach (var r in RecipeList)
+                {
+                    if (r != null)
+                    {
+                        r.Serialize(writer);
+                    }
+                }
+            }
+            Console.WriteLine("\nChanges have been saved!\n");
+        }
+
+
+        /// <summary>
+        /// بارگزاری اطلاعات از فایل ذخیره شده
+        /// </summary>
+        /// <param name="receipeFilePath">آدرس فایل</param>
+        /// <returns>آیا بارگزاری با موفقیت انجام شد؟</returns>
+        public bool Load(string receipeFilePath)
+        {
+            if (!File.Exists(receipeFilePath))
+            {
+                Console.WriteLine("\nThere is nothing to load!\n");
+                return false;
+            }
+
+            using (StreamReader reader = new StreamReader(receipeFilePath))
+            {
+                int recipeCount = int.Parse(reader.ReadLine());
+                RecipeList = new Recipe[recipeCount];
+
+                for (int i = 0; i < this.RecipeList.Length; i++)
+                {
+                    Recipe r = Recipe.Deserialize(reader);
+                    if (null == r)
+                    {
+                        // Deserialize returns null if it reaches end of file.
+                        break;
+                    }
+                    this.RecipeList[i] = r;
+                }
+            }
+            Console.WriteLine("\nRecipes loaded successfuly!\n");
+            return true;
         }
 
         public Recipe[] RecipeList
