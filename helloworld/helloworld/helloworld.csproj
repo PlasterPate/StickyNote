@@ -4,11 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-<<<<<<< HEAD
     <ProjectGuid>{F7046887-F93A-42B7-86C7-3B755022FE8F}</ProjectGuid>
-=======
-    <ProjectGuid>{D53AE0B6-8CD9-4313-A727-342391F736BA}</ProjectGuid>
->>>>>>> 72c067e5c81458212549ce070d5b05effdb6d6d3
     <OutputType>Exe</OutputType>
     <RootNamespace>helloworld</RootNamespace>
     <AssemblyName>helloworld</AssemblyName>
