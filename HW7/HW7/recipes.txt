@@ -1,0 +1,51 @@
+﻿20
+pizza
+bake 10-15 minutes
+2
+pepperoni
+panir pizza
+1.25
+kg
+sos
+ghermez
+0.5
+litr
+1
+italian
+p1 p2 p3
+kabab
+goosht ra charkh karde, sikh mikonim!sepas an ra kabab mikonim
+3
+goosht
+charkh karde
+2
+kg
+berenj
+berenge lenjan
+1.5
+peymane
+sabzi
+reyhoon va piazche
+300
+gr
+4
+irani
+k1 k2 k3
+gheime
+dastoore pokhte khoresh gheime
+3
+lappe
+...
+750
+gr
+sib zamini
+poost kande, khelal karde, sorkh mikonim
+2
+adad
+rob goje
+...
+3
+ghashoghe ghaza khori
+5
+irani
+gh1 gh2 gh3
