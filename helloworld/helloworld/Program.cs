@@ -29,9 +29,12 @@ namespace helloworld
 
         static void Main(string[] args)
         {
+<<<<<<< HEAD
             
 
             //Console.ReadKey();
+=======
+>>>>>>> 72c067e5c81458212549ce070d5b05effdb6d6d3
         }
     }
 }
