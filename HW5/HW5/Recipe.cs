@@ -39,7 +39,7 @@ namespace Assignment5
             this.servingCount = servingCount;
             this.cuisine = cuisine;
             this.keywords = new string[keywords.Length];
-            for (int i = 0; i < keywords.Length; i++)
+            for (int i = 0; i < keywords.Length && keywords[i] != null; i++)
             {
                 this.keywords[i] = keywords[i];
             }
@@ -68,6 +68,12 @@ namespace Assignment5
             {
                 this.keywords[i] = keywords[i];
             }
+        }
+
+        public Recipe()
+        {
+            Ingredients = new Ingredient[10];
+            Keywords = new string[0];
         }
 
         /// <summary>
@@ -157,7 +163,7 @@ namespace Assignment5
         public string IngredientsList()
         {
             string[] ingredientsNames = new string[Ingredients.Length];
-            for (int i = 0; i < ingredients.Length ; i++)
+            for (int i = 0; i < Ingredients.Length && Ingredients[i] != null ; i++)
             {
                 ingredientsNames[i] = Ingredients[i].Name;
             }
@@ -177,11 +183,11 @@ namespace Assignment5
             writer.WriteLine(Title);
             writer.WriteLine(Instructions);
             writer.WriteLine(Ingredients.Length);
-            using(StreamWriter ingWriter = new StreamWriter(Ingredient.IngFilePath , true))
+            
                 foreach(Ingredient ing in Ingredients)
                 {
                     if (ing != null)
-                        ing.Serialize(ingWriter);
+                        ing.Serialize(writer);
                 }
             writer.WriteLine(ServingCount);
             writer.WriteLine(Cuisine);
@@ -196,16 +202,26 @@ namespace Assignment5
             string inst = reader.ReadLine();
             int ingCount = int.Parse(reader.ReadLine());
             Ingredient[] ings = new Ingredient[ingCount];
-            using (StreamReader ingReader = new StreamReader(Ingredient.IngFilePath))
+            
                 for(int i = 0; i < ingCount; i++)
                 {
-                    ings[i] = Ingredient.Deserialize(ingReader);
+                    ings[i] = Ingredient.Deserialize(reader);
                 }
             int servCount = int.Parse(reader.ReadLine());
             string cuis = reader.ReadLine();
             string[] keywords = reader.ReadLine().Split();
             Recipe rec = new Recipe(title, inst, ings, servCount, cuis, keywords);
             return rec;
+        }
+
+        public Ingredient LookupByName(string name)
+        {
+            for(int i = 0; i< Ingredients.Length && Ingredients != null; i++)
+            {
+                if (Ingredients[i].Name == name)
+                    return Ingredients[i];
+            }
+            return null;
         }
 
         public static string RecipeFilePath

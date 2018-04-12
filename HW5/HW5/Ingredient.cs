@@ -29,7 +29,11 @@ namespace Assignment5
             this.description = description;
             this.quantity = quantity;
             this.unit = unit;
-            // بر عهده دانشجو
+        }
+
+        public Ingredient()
+        {
+
         }
 
         public void Serialize(StreamWriter writer)

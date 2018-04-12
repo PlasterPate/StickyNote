@@ -44,7 +44,6 @@ namespace Assignment5
             return false;
         }
 
-
         /// <summary>
         /// حذف دستور پختs
         /// </summary>
@@ -62,18 +61,7 @@ namespace Assignment5
                     }
                     recipeList[recipeList.Length - 1] = null;
                     Console.WriteLine("Recipe Deleted Successfully");
-                    File.Delete(Recipe.RecipeFilePath);
-                    using (StreamWriter writer = new StreamWriter(Recipe.RecipeFilePath))
-                    {
-                        foreach(var rec in RecipeList)
-                        {
-                            if(rec != null)
-                            {
-                                rec.Serialize(writer);
-                            }
-                        }
-                    }
-                        return true;
+                    return true;
                 }
             }
             Console.WriteLine("No Recipes Found!");
@@ -151,18 +139,21 @@ namespace Assignment5
         /// <param name="receipeFilePath">آدرس فایل</param>
         public void Save(string receipeFilePath)
         {
-            using (StreamWriter writer = new StreamWriter(receipeFilePath, false, Encoding.UTF8))
+            if (receipeFilePath != string.Empty)
             {
-                writer.WriteLine(RecipeList.Length);
-                foreach (var r in RecipeList)
+                using (StreamWriter writer = new StreamWriter(receipeFilePath, false, Encoding.UTF8))
                 {
-                    if (r != null)
+                    writer.WriteLine(RecipeList.Length);
+                    foreach (var r in RecipeList)
                     {
-                        r.Serialize(writer);
+                        if (r != null)
+                        {
+                            r.Serialize(writer);
+                        }
                     }
                 }
+                Console.WriteLine("\nChanges have been saved!\n");
             }
-            Console.WriteLine("\nChanges have been saved!\n");
         }
 
 
