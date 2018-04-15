@@ -29,7 +29,7 @@ namespace Assignment5.Tests
         [TestMethod()]
         public void ToStringTest()
         {
-            string expectedResult = $"{name}:\t{quantity} {unit} - {description}";
+            string expectedResult = $"{name}: {quantity} {unit} - {description}";
             Assert.AreEqual(expectedResult, ingredientTest.ToString());
         }
 

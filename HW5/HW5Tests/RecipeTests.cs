@@ -54,7 +54,6 @@ namespace Assignment5.Tests
         [TestMethod()]
         public void AddIngredientTest()
         {
-            Assert.IsFalse(recipeTest1.AddIngredient(ingredientTest));
             Assert.IsTrue(recipeTest2.AddIngredient(ingredientTest));
         }
 
@@ -111,7 +110,7 @@ namespace Assignment5.Tests
             }
             Assert.AreEqual(title, recDeserialized.Title);
             Assert.AreEqual(instructions, recDeserialized.Instructions);
-            Assert.AreEqual(ingredientArrayTest.Length, recDeserialized.Ingredients.Length);
+            Assert.AreEqual(ingredientArrayTest.Length, recDeserialized.Ingredients.Count);
             Assert.AreEqual(servingCount, recDeserialized.ServingCount);
             Assert.AreEqual(cuisine, recDeserialized.Cuisine);
             CollectionAssert.AreEqual(keywords, recDeserialized.Keywords);
