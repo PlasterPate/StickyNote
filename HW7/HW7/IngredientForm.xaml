@@ -9,14 +9,14 @@
     <Grid>
         <Label x:Name="NameLabel" Content="نام" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="159,13,0,0" Width="71" FontFamily="Segoe UI Black" Height="29" AutomationProperties.IsRequiredForForm="True"/>
         <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Margin="10,13,0,0"/>
-        <Label x:Name="QuantityLabel" Content="مقدار " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="159,47,0,0" Width="71" FontFamily="Segoe UI Black" Height="29" AutomationProperties.IsRequiredForForm="True"/>
+        <Label x:Name="QuantityLabel" Content="مقدار " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="159,47,0,0" Width="71" FontFamily="Segoe UI Black" Height="29" AutomationProperties.IsRequiredForForm="True" ToolTip="یک عدد مثبت وارد کنید"/>
         <TextBox x:Name="QuantityTextBox" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Margin="10,47,0,0"/>
         <Label x:Name="UnitLabel" Content="واحد" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="159,82,0,0" Width="71" FontFamily="Segoe UI Black" Height="29" AutomationProperties.IsRequiredForForm="True"/>
         <TextBox x:Name="UnitTextBox" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Margin="10,82,0,0"/>
         <Label x:Name="DescriptionLabel" Content="توضیحات" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="159,115,0,0" Width="71" FontFamily="Segoe UI Black" Height="29" AutomationProperties.IsRequiredForForm="True" ToolTip="از کجا پیدا کنیم یا اگر نداشتیم جایگزین چه چیزی استفاده کنیم"/>
         <TextBox x:Name="DescriptionTextBox" HorizontalAlignment="Left" Height="142" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Margin="10,118,0,0"/>
         <Button x:Name="BtnCancel" Content="انصراف" HorizontalAlignment="Left" VerticalAlignment="Top" Width="49" Margin="10,265,0,0" Click="BtnCancel_Click" FontFamily="B Roya" FontWeight="Bold" Cursor="Hand" IsCancel="True"/>
-        <Button x:Name="BtnAdd" Content="ثبت" HorizontalAlignment="Left" VerticalAlignment="Top" Width="37" Margin="64,265,0,0" Click="BtnAdd_Click" FontFamily="B Roya" FontWeight="Bold" Cursor="Hand"/>
+        <Button x:Name="BtnAdd" Content="ثبت" HorizontalAlignment="Left" VerticalAlignment="Top" Width="37" Margin="64,265,0,0" Click="BtnAdd_Click" FontFamily="B Roya" FontWeight="Bold" Cursor="Hand" IsDefault="True"/>
 
     </Grid>
 </Window>

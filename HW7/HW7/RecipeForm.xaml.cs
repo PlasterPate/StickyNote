@@ -29,11 +29,14 @@ namespace Assignment7
             ShowItems();
         }
 
+        /// <summary>
+        /// show ingredient items in list box
+        /// </summary>
         public void ShowItems()
         {
             IngredientsListBox.Items.Clear();
             if(recipeTemp != null)
-                for (int i = 0; i < recipeTemp.Ingredients.Length && recipeTemp.Ingredients[i] != null; i++)
+                for (int i = 0; i < recipeTemp.Ingredients.Count && recipeTemp.Ingredients[i] != null; i++)
                 {
                     ListBoxItem item = new ListBoxItem();
                     item.Content = recipeTemp.Ingredients[i].Name;
@@ -41,6 +44,12 @@ namespace Assignment7
                 }
         }
 
+        /// <summary>
+        /// when new button is clicked
+        /// create a new form to add ingredients
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnNew_Click(object sender, RoutedEventArgs e)
         {
             IngredientForm frm = new IngredientForm
@@ -56,6 +65,12 @@ namespace Assignment7
             }
         }
 
+        /// <summary>
+        /// when add button is clicked
+        /// add recipe to recipebook
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             bool isValid = false;
@@ -108,30 +123,28 @@ namespace Assignment7
                     recipeTemp.Keywords = KeywordsTextBox.Text.Split();
                 }
             }
-            //for (int i = 0; i< recipeTemp.Ingredients.Length; i++)
-            //{
-            //    if (recipeTemp.Ingredients[i] == null)
-            //    {
-            //        ingCount = i;
-            //        break;
-            //    }
-            //}
-            //Ingredient[] ingredients = new Ingredient[ingCount] ;
-            //for (int i = 0; i < ingredients.Length; i++)
-            //{
-            //    ingredients[i] = recipeTemp.Ingredients[i];
-            //}
-            //recipeTemp = new Recipe(title, instructions, ingredients, servingCount, cuisine, keywords);
             isAdded = true;
             Close();
         }
 
-        private void BtnCancle_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// when cancle button is click
+        /// cancel changes and go back to main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             isAdded = false;
             Close();
         }
 
+        /// <summary>
+        /// when view button is clicked
+        /// show specifications of the selected ingredient
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnView_Click(object sender, RoutedEventArgs e)
         {
             if(IngredientsListBox.SelectedItem != null)
@@ -142,6 +155,12 @@ namespace Assignment7
             }
         }
 
+        /// <summary>
+        /// when delete button is clicked
+        /// delete selecte ingredient
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnDel_Click(object sender, RoutedEventArgs e)
         {
             if (IngredientsListBox.SelectedItem != null)
@@ -156,6 +175,13 @@ namespace Assignment7
             }
         }
 
+        /// <summary>
+        /// when edit button is clicked
+        /// opens ingredient form window 
+        /// and let user to edit specifications of ingredient that had added before
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (IngredientsListBox.SelectedItem != null)

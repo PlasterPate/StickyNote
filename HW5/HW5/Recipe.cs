@@ -31,11 +31,8 @@ namespace Assignment5
         {
             this.title = title;
             this.instructions = instructions;
-            Ingredients = new Ingredient[ingredients.Length];
-            for (int i = 0; i < ingredients.Length; i++)
-            {
-                Ingredients[i] = ingredients[i];
-            }
+            Ingredients = new List<Ingredient>();
+            Ingredients.AddRange(ingredients);
             this.servingCount = servingCount;
             this.cuisine = cuisine;
             this.keywords = new string[keywords.Length];
@@ -60,7 +57,7 @@ namespace Assignment5
             this.title = title;
             this.instructions = instructions;
             this.ingredientCount = ingredientCount;
-            Ingredients = new Ingredient[ingredientCount];
+            Ingredients = new List<Ingredient>();
             this.servingCount = servingCount;
             this.cuisine = cuisine;
             this.keywords = new string[keywords.Length];
@@ -70,9 +67,12 @@ namespace Assignment5
             }
         }
 
+        /// <summary>
+        /// ایجاد شئ دستور پخت جدید
+        /// </summary>
         public Recipe()
         {
-            Ingredients = new Ingredient[10];
+            Ingredients = new List<Ingredient>();
             Keywords = new string[0];
         }
 
@@ -83,20 +83,8 @@ namespace Assignment5
         /// <returns>عمل اضافه کردن موفقیت آمیز انجام شد یا خیر. در صورت تکمیل ظرفیت مقدار برگشتی "خیر" میباشد.</returns>
         public bool AddIngredient(Ingredient ingredient)
         {
-            for (int i = 0; i < Ingredients.Length; i++)
-            {
-                if (Ingredients[i] == null)
-                {
-                    Ingredients[i] = ingredient;
-                    //using(StreamWriter writer = new StreamWriter
-                    //    (@"C:\git\96521497\MyFirstProject\HW6\HW6\ingredients.txt", true))
-                    //{
-                    //    ingredient.Serialize(writer);
-                    //}
-                    return true;
-                }
-            }
-            return false;
+            Ingredients.Add(ingredient);
+            return true;
         }
 
         /// <summary>
@@ -106,18 +94,10 @@ namespace Assignment5
         /// <returns>آیا حداقل یک ماده اولیه حذف شد؟</returns>
         public bool RemoveIngredient(string name)
         {
-            // بر عهده دانشجو
-            for (int i = 0; i < Ingredients.Length && ingredients[i] != null; i++)
+            if (LookupByName(name) != null)
             {
-                if (Ingredients[i].Name == name)
-                {
-                    for (int j = i; j < Ingredients.Length - 1; j++)
-                    {
-                        Ingredients[j] = Ingredients[j + 1];
-                    }
-                    Ingredients[Ingredients.Length - 1] = null;
-                    return true;
-                }
+                Ingredients.Remove(LookupByName(name));
+                return true;
             }
             return false;
         }
@@ -129,7 +109,7 @@ namespace Assignment5
         /// <param name="newServingCount">تعداد افراد جدید</param>
         public void UpdateServingCount(int newServingCount)
         {
-            for (int i = 0; i < Ingredients.Length; i++)
+            for (int i = 0; i < Ingredients.Count; i++)
             {
                 Ingredients[i].Quantity *= newServingCount / ServingCount;
             }
@@ -139,12 +119,12 @@ namespace Assignment5
         /// <summary>
         /// فیلد پیشتیبان برای Ingredients.
         /// </summary>
-        private Ingredient[] ingredients;
+        private List<Ingredient> ingredients;
 
         /// <summary>
         /// مواد اولیه
         /// </summary>
-        public Ingredient[] Ingredients
+        public List<Ingredient> Ingredients
         {
             get
             {
@@ -162,14 +142,18 @@ namespace Assignment5
         /// <returns>joined titles in a string</returns>
         public string IngredientsList()
         {
-            string[] ingredientsNames = new string[Ingredients.Length];
-            for (int i = 0; i < Ingredients.Length && Ingredients[i] != null ; i++)
+            string[] ingredientsNames = new string[Ingredients.Count];
+            for (int i = 0; i < Ingredients.Count && Ingredients[i] != null ; i++)
             {
                 ingredientsNames[i] = Ingredients[i].Name;
             }
             return String.Join(", ", ingredientsNames);
         }
 
+        /// <summary>
+        /// a summary of recipe specifications 
+        /// </summary>
+        /// <returns>string of informations</returns>
         public override string ToString()
         {
             return $"{Title}\n" +
@@ -178,11 +162,15 @@ namespace Assignment5
                 $"{Instructions}";
         }
 
+        /// <summary>
+        /// write recipe specifications on file
+        /// </summary>
+        /// <param name="writer"></param>
         public void Serialize(StreamWriter writer)
         {
             writer.WriteLine(Title);
             writer.WriteLine(Instructions);
-            writer.WriteLine(Ingredients.Length);
+            writer.WriteLine(Ingredients.Count);
             
                 foreach(Ingredient ing in Ingredients)
                 {
@@ -194,6 +182,11 @@ namespace Assignment5
             writer.WriteLine(String.Join(" ", Keywords));
         }
 
+        /// <summary>
+        /// read recipe specifications from a file
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         public static Recipe Deserialize(StreamReader reader)
         {
             string title = reader.ReadLine();
@@ -214,9 +207,14 @@ namespace Assignment5
             return rec;
         }
 
+        /// <summary>
+        /// finding ingredient by name
+        /// </summary>
+        /// <param name="name">ingredient's name</param>
+        /// <returns>ingredient object</returns>
         public Ingredient LookupByName(string name)
         {
-            for(int i = 0; i< Ingredients.Length && Ingredients != null; i++)
+            for(int i = 0; i< Ingredients.Count && Ingredients[i] != null; i++)
             {
                 if (Ingredients[i].Name == name)
                     return Ingredients[i];

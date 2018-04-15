@@ -31,11 +31,18 @@ namespace Assignment5
             this.unit = unit;
         }
 
+        /// <summary>
+        /// ایجاد شئ مشخصات یکی از مواد اولیه دستور غذا
+        /// </summary>
         public Ingredient()
         {
 
         }
 
+        /// <summary>
+        /// write ingredient specifications on file
+        /// </summary>
+        /// <param name="writer"></param>
         public void Serialize(StreamWriter writer)
         {
             writer.WriteLine(Name);
@@ -44,6 +51,11 @@ namespace Assignment5
             writer.WriteLine(Unit);
         }
 
+        /// <summary>
+        /// read ingredient specifications from a file
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         public static Ingredient Deserialize(StreamReader reader)
         {
             string name = reader.ReadLine();
@@ -135,7 +147,7 @@ namespace Assignment5
         /// <returns>متن معادل برای این ماده اولیه - قابل استفاده برای چاپ در خروجی</returns>
         public override string ToString()
         {
-            return $"{Name}:\t{Quantity} {Unit} - {Description}";
+            return $"{Name}: {Quantity} {Unit} - {Description}";
         }
     }
 }

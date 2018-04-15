@@ -27,7 +27,13 @@ namespace Assignment7
             InitializeComponent();
         }
 
-        private void GetItems(Ingredient ing)
+        /// <summary>
+        /// when add button is clicked
+        /// add ingredient to recipe
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             bool isValid = false;
             if (NameTextBox.Text == string.Empty)
@@ -52,7 +58,7 @@ namespace Assignment7
             {
                 try
                 {
-                    ing.Quantity = double.Parse(QuantityTextBox.Text);
+                    ingredientTemp.Quantity = double.Parse(QuantityTextBox.Text);
                     QuantityLabel.Foreground = Brushes.Black;
                     isValid = true;
                 }
@@ -67,20 +73,21 @@ namespace Assignment7
                 }
                 if (isValid)
                 {
-                    ing.Name = NameTextBox.Text;
-                    ing.Description = DescriptionTextBox.Text;
-                    ing.Unit = UnitTextBox.Text;
+                    ingredientTemp.Name = NameTextBox.Text;
+                    ingredientTemp.Description = DescriptionTextBox.Text;
+                    ingredientTemp.Unit = UnitTextBox.Text;
                     isAdded = true;
                 }
             }
-        }
-
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            GetItems(ingredientTemp);
             Close();
         }
 
+        /// <summary>
+        /// when cancel butoon is clicked
+        /// cancel changes and go back to recipe form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             isAdded = false;

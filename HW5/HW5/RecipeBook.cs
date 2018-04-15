@@ -45,7 +45,7 @@ namespace Assignment5
         }
 
         /// <summary>
-        /// حذف دستور پختs
+        /// حذف دستور پخت
         /// </summary>
         /// <param name="recipeTitle">عنوان دستور پخت</param>
         /// <returns>آیا حذف دستور پخت درست انجام شد؟</returns>
@@ -134,7 +134,7 @@ namespace Assignment5
             return null;
         }
         /// <summary>
-        /// ذخیره لیست دستور پخت غذاها در فایل.
+        /// ذخیره لیست دستور پخت غذاها در فایل
         /// </summary>
         /// <param name="receipeFilePath">آدرس فایل</param>
         public void Save(string receipeFilePath)
