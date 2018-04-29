@@ -20,13 +20,13 @@ namespace Assignment5.Tests
         static string cuisine = "cuisineTest";
         static string keywordTest1 = "keywordTest1";
         static string keywordTest2 = "keywordTest2";
-        static string[] keywords = { keywordTest1, keywordTest2 };
+        static List<string> keywords = new List<string> { keywordTest1, keywordTest2 };
         static string name = "nameTest";
         static string description = "descriptionTest";
         static double quantity = 3;
         static string unit = "unitTest";
         static Ingredient ingredientTest = new Ingredient(name, description, quantity, unit);
-        static Ingredient[] ingredientArrayTest = new Ingredient[ingredientCount] { ingredientTest };
+        static List<Ingredient> ingredientArrayTest = new List<Ingredient>(ingredientCount) { ingredientTest };
         Recipe recipeTest1 = new Recipe(title, instructions, ingredientArrayTest, servingCount, cuisine, keywords);
         Recipe recipeTest2 = new Recipe(title, instructions, ingredientCount, servingCount, cuisine, keywords);
         [TestMethod()]
@@ -34,7 +34,7 @@ namespace Assignment5.Tests
         {
             Assert.AreEqual(title, recipeTest1.Title);
             Assert.AreEqual(instructions, recipeTest1.Instructions);
-            CollectionAssert.AreEqual(ingredientArrayTest, recipeTest1.Ingredients);
+            CollectionAssert.AreEqual(ingredientArrayTest, recipeTest1.IngredientsList);
             Assert.AreEqual(servingCount, recipeTest1.ServingCount);
             Assert.AreEqual(cuisine, recipeTest1.Cuisine);
             CollectionAssert.AreEqual(keywords, recipeTest1.Keywords);
@@ -54,7 +54,6 @@ namespace Assignment5.Tests
         [TestMethod()]
         public void AddIngredientTest()
         {
-            Assert.IsFalse(recipeTest1.AddIngredient(ingredientTest));
             Assert.IsTrue(recipeTest2.AddIngredient(ingredientTest));
         }
 
@@ -83,7 +82,7 @@ namespace Assignment5.Tests
             for (int i = 0; i < ingNames.Length; i++)
                 ingNames[i] = ingredientArrayTest[i].Name;
             string expectedResult = String.Join(", ", ingNames);
-            Assert.AreEqual(expectedResult, recipeTest1.IngredientsList());
+            Assert.AreEqual(expectedResult, recipeTest1.IngredientsJoin());
         }
 
         [TestMethod()]
@@ -91,9 +90,17 @@ namespace Assignment5.Tests
         {
             string expectedResult = $"{title}\n" +
                 $"cuisine: {cuisine}\n" +
-                $"ingredients: {recipeTest1.IngredientsList()}\n" +
+                $"ingredients: {recipeTest1.IngredientsJoin()}\n" +
                 $"{instructions}";
             Assert.AreEqual(expectedResult, recipeTest1.ToString());
+        }
+
+        [TestMethod()]
+        public void LookupByNameTest()
+        {
+            recipeTest2.AddIngredient(ingredientTest);
+            Assert.AreEqual(ingredientTest ,recipeTest2.LookupByName(name));
+            Assert.IsNull(recipeTest2.LookupByName("another name"));
         }
 
         [TestMethod()]
@@ -108,13 +115,37 @@ namespace Assignment5.Tests
             using (StreamReader reader = new StreamReader(recFilePath))
             {
                 recDeserialized = Recipe.Deserialize(reader);
+                Assert.IsNull(Recipe.Deserialize(reader));
             }
-            Assert.AreEqual(title, recDeserialized.Title);
-            Assert.AreEqual(instructions, recDeserialized.Instructions);
-            Assert.AreEqual(ingredientArrayTest.Length, recDeserialized.Ingredients.Length);
-            Assert.AreEqual(servingCount, recDeserialized.ServingCount);
-            Assert.AreEqual(cuisine, recDeserialized.Cuisine);
-            CollectionAssert.AreEqual(keywords, recDeserialized.Keywords);
+            Assert.AreEqual(recipeTest1.Title, recDeserialized.Title);
+            Assert.AreEqual(recipeTest1.Cuisine, recDeserialized.Cuisine);
+            Assert.AreEqual(recipeTest1.Instructions, recDeserialized.Instructions);
+            Assert.AreEqual(recipeTest1.ServingCount, recDeserialized.ServingCount);
+            Assert.AreEqual(recipeTest1.IngredientsList[0].Name, recDeserialized.IngredientsList[0].Name);
+            Assert.AreEqual(recipeTest1.IngredientsList[0].Description, recDeserialized.IngredientsList[0].Description);
+            Assert.AreEqual(recipeTest1.IngredientsList[0].Unit, recDeserialized.IngredientsList[0].Unit);
+            Assert.AreEqual(recipeTest1.IngredientsList[0].Quantity, recDeserialized.IngredientsList[0].Quantity);
+            CollectionAssert.AreEqual(recipeTest1.Keywords, recDeserialized.Keywords);
+
+        }
+
+        [TestMethod()]
+        public void RecipeTest2()
+        {
+            Recipe recNullConstructor = new Recipe();
+            Assert.IsNull(recNullConstructor.Title);
+            Assert.IsNull(recNullConstructor.Instructions);
+            Assert.IsNull(recNullConstructor.Cuisine);
+            Assert.AreEqual(0, recNullConstructor.IngredientCount);
+            Assert.AreEqual(0, recNullConstructor.ServingCount);
+            Assert.AreEqual(0, recNullConstructor.Keywords.Count);
+            Assert.AreEqual(0, recNullConstructor.IngredientsList.Count);
+            recNullConstructor.IngredientCount = 1;
+            Assert.AreEqual(1, recNullConstructor.IngredientCount);
+            recNullConstructor.IngredientCount = -1;
+            Assert.AreEqual(0, recNullConstructor.IngredientCount);
+            recNullConstructor.ServingCount = -1;
+            Assert.AreEqual(0, recNullConstructor.ServingCount);
         }
     }
 }
