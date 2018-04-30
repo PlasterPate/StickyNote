@@ -11,7 +11,7 @@ namespace Assignment5
         static void Main(string[] args)
         {
             RecipeBook fromMom = new RecipeBook("دستور پخت های مادر", 20);
-            Ingredient ingredientTemp;
+            Ingredient ingredientTemp = new Ingredient();
             int ingredientsCountTemp = 0;
             int servingCountTemp = 0;
             int editNum = 0;
@@ -26,51 +26,8 @@ namespace Assignment5
                     // New Recipe
                     case ConsoleKey.N:
                         Console.Clear();
-                        MessageShow("New Recipe");
-                        Recipe recipeTemp;
-                        MessageShow("Enter a Title");
-                        string titleTemp = Console.ReadLine();
-                        Console.Clear();
-                        TryReadIngredientsCount(ref ingredientsCountTemp);
-                        TryReadServingCount(ref servingCountTemp);
-                        Console.Clear();
-                        MessageShow("Enter the Cuisine");
-                        string cuisineTemp = Console.ReadLine();
-                        Console.Clear();
-                        MessageShow("Enter Keywords in a line \nPress enter when you are finished");
-                        List<string> keywordsTemp = new List<string>();
-                        keywordsTemp.AddRange(Console.ReadLine().Split());
-                        recipeTemp = new Recipe(titleTemp, null, new List<Ingredient>(ingredientsCountTemp), servingCountTemp, cuisineTemp, keywordsTemp);
-                        int ingCounter = ingredientsCountTemp;
-                        do
-                        {
-                            Console.Clear();
-                            ingredientTemp = new Ingredient(null, null, 0, null);
-                            MessageShow("Make New Ingredient \nEnter a Name");
-                            ingredientTemp.Name = Console.ReadLine();
-                            Console.Clear();
-                            MessageShow("Enter the Description, please!");
-                            ingredientTemp.Description = Console.ReadLine();
-                            Console.Clear();
-                            TryReadIngredientQuantity(ingredientTemp);
-                            Console.Clear();
-                            MessageShow("Enter the Unit");
-                            ingredientTemp.Unit = Console.ReadLine();
-                            Console.Clear();
-                            recipeTemp.AddIngredient(ingredientTemp);
-                            MessageShow($"{ingredientTemp.Name} has been added to your ingredients list");
-                            ingCounter--;
-                            MessageShow($"{ingCounter} Remaining \n");
-                            MessageShow("Press any key to continue");
-                            cki = Console.ReadKey();
-                        } while (ingCounter > 0);
-                        Console.Clear();
-                        MessageShow("Enter the Instructions, please!");
-                        recipeTemp.Instructions = Console.ReadLine();
-                        Console.Clear();
-                        MessageShow("Recipe Added Successfully");
-                        fromMom.Add(recipeTemp);
-                        MessageShow(recipeTemp.ToString());
+                        Recipe recipeTemp = new Recipe();
+                        GetRecipe(fromMom, recipeTemp, ingredientTemp, ingredientsCountTemp, servingCountTemp, cki);
                         break;
                     // Delete recipe by name
                     case ConsoleKey.D:
@@ -164,12 +121,20 @@ namespace Assignment5
             }
             while (cki.Key != ConsoleKey.Escape);
         }
-
+        /// <summary>
+        /// Writes a message on console
+        /// </summary>
+        /// <param name="message">message string</param>
         public static void MessageShow(string message)
         {
             Console.WriteLine(message);
         }
 
+        /// <summary>
+        /// tries to read a valid number for ingredient count
+        /// </summary>
+        /// <param name="ingCount"></param>
+        /// <param name="isTest"></param>
         public static void TryReadIngredientsCount(ref int ingCount ,bool isTest = false)
         {
             MessageShow("How many ingredients will you need?");
@@ -197,6 +162,11 @@ namespace Assignment5
             } while (isValid == false && isTest == false);
         }
 
+        /// <summary>
+        /// tries to get a valid number for serving count
+        /// </summary>
+        /// <param name="serveCount"></param>
+        /// <param name="isTest"></param>
         public static void TryReadServingCount(ref int serveCount ,bool isTest = false)
         {
             MessageShow("How many people is this recipe going to serve?");
@@ -217,6 +187,12 @@ namespace Assignment5
             } while (isValid == false && isTest == false);
 
         }
+
+        /// <summary>
+        /// tries to get a valid number for ingredient quantity
+        /// </summary>
+        /// <param name="ing"></param>
+        /// <param name="isTest"></param>
         public static void TryReadIngredientQuantity(Ingredient ing ,bool isTest = false)
         {
             MessageShow("Enter the Quantity");
@@ -237,6 +213,12 @@ namespace Assignment5
             } while (isValid == false && isTest == false);
         }
 
+        /// <summary>
+        /// tries to get a valid number for recipe in list
+        /// </summary>
+        /// <param name="recBook"></param>
+        /// <param name="recNum"></param>
+        /// <param name="isTest"></param>
         public static void TryReadRecNum(RecipeBook recBook, ref int recNum, bool isTest = false)
         {
             MessageShow("Enter the recipe number");
@@ -264,6 +246,12 @@ namespace Assignment5
             } while (isValid == false && isTest == false);
         }
 
+        /// <summary>
+        /// tries to get a valid number for new srving count
+        /// </summary>
+        /// <param name="recBook"></param>
+        /// <param name="editNum"></param>
+        /// <param name="isTest"></param>
         public static void TryUpdateServingCount(RecipeBook recBook, ref int editNum, bool isTest = false)
         {
             MessageShow("\nTo update the serving count enter a new one");
@@ -284,6 +272,78 @@ namespace Assignment5
             } while (isValid == false && isTest == false);
             //fromMom.RecipeList[editNum - 1].UpdateServingCount(int.Parse(Console.ReadLine()));
             MessageShow("Recipe edited successfully!");
+        }
+
+        /// <summary>
+        /// gets fields of an ingredient and make one then add it to recipe
+        /// </summary>
+        /// <param name="recTemp"></param>
+        /// <param name="ingTemp"></param>
+        /// <param name="cki"></param>
+        /// <param name="ingredientsCountTemp"></param>
+        /// <param name="isTest"></param>
+        public static void GetIngredient(Recipe recTemp ,Ingredient ingTemp ,ConsoleKeyInfo cki , int ingredientsCountTemp, bool isTest = false)
+        {
+            int ingCounter = ingredientsCountTemp;
+            do
+            {
+                if (!isTest) Console.Clear();
+                ingTemp = new Ingredient();
+                MessageShow("Make New Ingredient \nEnter a Name");
+                ingTemp.Name = Console.ReadLine();
+                if (!isTest) Console.Clear();
+                MessageShow("Enter the Description, please!");
+                ingTemp.Description = Console.ReadLine();
+                if (!isTest) Console.Clear();
+                TryReadIngredientQuantity(ingTemp);
+                if (!isTest) Console.Clear();
+                MessageShow("Enter the Unit");
+                ingTemp.Unit = Console.ReadLine();
+                if (!isTest) Console.Clear();
+                recTemp.AddIngredient(ingTemp);
+                MessageShow($"{ingTemp.Name} has been added to your ingredients list");
+                ingCounter--;
+                MessageShow($"{ingCounter} Remaining \n");
+                MessageShow("Press any key to continue");
+                if (!isTest) cki = Console.ReadKey();
+            } while (ingCounter > 0);
+        }
+
+        /// <summary>
+        /// gets fields of a recipe and make one then adds it to recipe book
+        /// </summary>
+        /// <param name="fromMom"></param>
+        /// <param name="recipeTemp"></param>
+        /// <param name="ingTemp"></param>
+        /// <param name="ingCountTemp"></param>
+        /// <param name="servCountTemp"></param>
+        /// <param name="cki"></param>
+        /// <param name="isTest"></param>
+        public static void GetRecipe(RecipeBook fromMom, Recipe recipeTemp,Ingredient ingTemp,
+            int ingCountTemp, int servCountTemp, ConsoleKeyInfo cki, bool isTest = false )
+        {
+            MessageShow("New Recipe");
+            MessageShow("Enter a Title");
+            string titleTemp = Console.ReadLine();
+            if (!isTest) Console.Clear();
+            if (!isTest) TryReadIngredientsCount(ref ingCountTemp, isTest);
+            if (!isTest) TryReadServingCount(ref servCountTemp, isTest);
+            if (!isTest) Console.Clear();
+            MessageShow("Enter the Cuisine");
+            string cuisineTemp = Console.ReadLine();
+            if (!isTest) Console.Clear();
+            MessageShow("Enter Keywords in a line \nPress enter when you are finished");
+            List<string> keywordsTemp = new List<string>();
+            keywordsTemp.AddRange(Console.ReadLine().Split());
+            recipeTemp = new Recipe(titleTemp, null, new List<Ingredient>(ingCountTemp), servCountTemp, cuisineTemp, keywordsTemp);
+            if (!isTest) GetIngredient(recipeTemp, ingTemp, cki, ingCountTemp, isTest);
+            if (!isTest) Console.Clear();
+            MessageShow("Enter the Instructions, please!");
+            recipeTemp.Instructions = Console.ReadLine();
+            if (!isTest) Console.Clear();
+            MessageShow("Recipe Added Successfully");
+            fromMom.Add(recipeTemp);
+            MessageShow(recipeTemp.ToString());
         }
     }
 }

@@ -225,5 +225,75 @@ namespace Assignment5.Tests
                 Console.SetIn(Console.In);
             }
         }
+
+        [TestMethod()]
+        public void GetIngredientTest()
+        {
+            ConsoleKeyInfo cki;
+            string title = "titleTest";
+            string instructions = "instructionsTest";
+            int ingredientCount = 1;
+            int servingCount = 4;
+            string cuisine = "cuisineTest";
+            string keywordTest1 = "keywordTest1";
+            string keywordTest2 = "keywordTest2";
+            List<string> keywords = new List<string> { keywordTest1, keywordTest2 };
+            //string ckiString = ConsoleKey.A.ToString();
+            string name = "nameTest";
+            string description = "descriptionTest";
+            string quantity = "3";
+            string unit = "unitTest";
+            string input = $"{name}\n{description}\n{quantity}\n{unit}";
+            Ingredient ingredientTest = new Ingredient("nothing", "nothing", 0, "nothing");
+            List<Ingredient> ingredientArrayTest = new List<Ingredient>(ingredientCount) { ingredientTest };
+            Recipe recipeTest = new Recipe(title, instructions, ingredientArrayTest, servingCount, cuisine, keywords);
+            using (StringReader reader = new StringReader(input))
+            {
+                Console.SetIn(reader);
+                cki = new ConsoleKeyInfo();
+                Program.GetIngredient(recipeTest, ingredientTest, cki, ingredientCount, true);
+                Assert.AreEqual(name, recipeTest.IngredientsList[1].Name);
+                Assert.AreEqual(description, recipeTest.IngredientsList[1].Description);
+                Assert.AreEqual(int.Parse(quantity), recipeTest.IngredientsList[1].Quantity);
+                Assert.AreEqual(unit, recipeTest.IngredientsList[1].Unit);
+                Console.SetIn(Console.In);
+            }
+        }
+
+        [TestMethod()]
+        public void GetRecipeTest()
+        {
+            string bookTitle = "bookTitleTest";
+            int capacity = 2;
+            RecipeBook recipeBookTest = new RecipeBook(bookTitle, capacity);
+            string title = "titleTest";
+            string instructions = "instructionsTest";
+            int ingredientCount = 1;
+            int servingCount = 4;
+            string cuisine = "cuisineTest";
+            string keywordTest1 = "keywordTest1";
+            string keywordTest2 = "keywordTest2";
+            List<string> keywords = new List<string> { keywordTest1, keywordTest2 };
+            string input = $"{title}\n{cuisine}\n{keywordTest1} {keywordTest2}\n{instructions}";
+            string name = "nameTest";
+            string description = "descriptionTest";
+            double quantity = 3;
+            string unit = "unitTest";
+            Ingredient ingredientTest = new Ingredient(name, description, quantity, unit);
+            List<Ingredient> ingredientArrayTest = new List<Ingredient>(ingredientCount) { ingredientTest };
+            Recipe recipeTest = new Recipe(title, instructions, ingredientArrayTest, servingCount, cuisine, keywords);
+            recipeBookTest.Add(recipeTest);
+            ConsoleKeyInfo cki = new ConsoleKeyInfo();
+            using(StringReader reader = new StringReader(input))
+            {
+                Console.SetIn(reader);
+                Program.GetRecipe(recipeBookTest, recipeTest, ingredientTest, ingredientCount, servingCount, cki, true);
+                Assert.AreEqual(title, recipeTest.Title);
+                Assert.AreEqual(cuisine, recipeTest.Cuisine);
+                Assert.AreEqual(instructions, recipeTest.Instructions);
+                CollectionAssert.AreEqual(keywords, recipeTest.Keywords);
+                Console.SetIn(Console.In);
+            }
+        }
     }
 }
