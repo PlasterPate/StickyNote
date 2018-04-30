@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace Assignment5
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
             RecipeBook fromMom = new RecipeBook("دستور پخت های مادر", 20);
-            Ingredient ingredientTemp;
+            Ingredient ingredientTemp = new Ingredient();
+            int ingredientsCountTemp = 0;
+            int servingCountTemp = 0;
+            int editNum = 0;
             ConsoleKeyInfo cki;
             do
             {
-                Console.WriteLine($"Press (N)ew, (D)el, (S)earch, (L)ist, sa(V)e or l(O)ad");
+                MessageShow($"Press (N)ew, (D)el, (S)earch, (L)ist, sa(V)e or l(O)ad");
                 cki = Console.ReadKey();
                 Console.WriteLine();
                 switch (cki.Key)
@@ -23,109 +26,14 @@ namespace Assignment5
                     // New Recipe
                     case ConsoleKey.N:
                         Console.Clear();
-                        Console.WriteLine("New Recipe");
-                        Recipe recipeTemp;
-                        Console.WriteLine("Enter a Title");
-                        string titleTemp = Console.ReadLine();
-                        Console.Clear();
-                        Console.WriteLine("How many ingredients will you need?");
-                        int ingredientsCountTemp = 0;
-                        // A flag to check if user has enterd a valid number
-                        bool isValid = false;
-                        // gets an input until user enters a valid number
-                        do
-                        {
-                            try
-                            {
-                                ingredientsCountTemp = int.Parse(Console.ReadLine());
-                                Console.Clear();
-                                // Make sure that user enters a positive number
-                                if (ingredientsCountTemp > 0)
-                                    isValid = true;
-                                else
-                                    Console.WriteLine("The Recipe needs at least 1 ingredient");
-                            }
-                            catch
-                            {
-                                Console.Clear();
-                                Console.WriteLine("Please enter a valid number!");
-                            }
-                        } while (isValid == false);
-                        Console.WriteLine("How many people is this recipe going to serve?");
-                        int servingCountTemp = 0;
-                        isValid = false;
-                        // gets an input until user enters a valid number
-                        do
-                        {
-                            try
-                            {
-                                servingCountTemp = int.Parse(Console.ReadLine());
-                                isValid = true;
-                            }
-                            catch
-                            {
-                                Console.Clear();
-                                Console.WriteLine("Please enter a valid number!");
-                            }
-                        } while (isValid == false);
-                        Console.Clear();
-                        Console.WriteLine("Enter the Cuisine");
-                        string cuisineTemp = Console.ReadLine();
-                        Console.Clear();
-                        Console.WriteLine("Enter Keywords in a line \nPress enter when you are finished");
-                        string[] keywordsTemp = Console.ReadLine().Split();
-                        recipeTemp = new Recipe(titleTemp, null, new Ingredient[ingredientsCountTemp], servingCountTemp, cuisineTemp, keywordsTemp);
-                        int ingCounter = ingredientsCountTemp;
-                        do
-                        {
-                            Console.Clear();
-                            ingredientTemp = new Ingredient(null, null, 0, null);
-                            Console.WriteLine("Make New Ingredient \nEnter a Name");
-                            ingredientTemp.Name = Console.ReadLine();
-                            Console.Clear();
-                            Console.WriteLine("Enter the Description, please!");
-                            ingredientTemp.Description = Console.ReadLine();
-                            Console.Clear();
-                            Console.WriteLine("Enter the Quantity");
-                            isValid = false;
-                            // gets an input until user enters a valid number
-                            do
-                            {
-                                try
-                                {
-                                    ingredientTemp.Quantity = double.Parse(Console.ReadLine());
-                                    isValid = true;
-                                }
-                                catch
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("Please enter a valid number!");
-                                }
-                            } while (isValid == false);
-                            Console.Clear();
-                            Console.WriteLine("Enter the Unit");
-                            ingredientTemp.Unit = Console.ReadLine();
-                            Console.Clear();
-                            recipeTemp.AddIngredient(ingredientTemp);
-                            Console.WriteLine($"{ingredientTemp.Name} has been added to your ingredients list");
-                            ingCounter--;
-                            Console.WriteLine($"{ingCounter} Remaining \n");
-                            Console.WriteLine("Press any key to continue");
-                            cki = Console.ReadKey();
-                        } while (ingCounter > 0);
-                        Console.Clear();
-                        Console.WriteLine("Enter the Instructions, please!");
-                        recipeTemp.Instructions = Console.ReadLine();
-                        Console.Clear();
-                        Console.WriteLine("Recipe Added Successfully");
-                        fromMom.Add(recipeTemp);
-                        Console.WriteLine(recipeTemp.ToString());
+                        Recipe recipeTemp = new Recipe();
+                        GetRecipe(fromMom, recipeTemp, ingredientTemp, ingredientsCountTemp, servingCountTemp, cki);
                         break;
                     // Delete recipe by name
                     case ConsoleKey.D:
                         Console.Clear();
-                        Console.WriteLine("Delete Recipe");
-                        Console.WriteLine("Enter Recipe Title to delete");
+                        MessageShow("Delete Recipe");
+                        MessageShow("Enter Recipe Title to delete");
                         string deletedTitle = Console.ReadLine();
                         Console.Clear();
                         fromMom.Remove(deletedTitle);
@@ -133,23 +41,23 @@ namespace Assignment5
                     // Search
                     case ConsoleKey.S:
                         Console.Clear();
-                        Console.WriteLine("Search Recipe");
-                        Console.WriteLine("Search by T(itle), K(eyword) or C(uisine)");
+                        MessageShow("Search Recipe");
+                        MessageShow("Search by T(itle), K(eyword) or C(uisine)");
                         cki = Console.ReadKey();
                         Console.Clear();
                         switch (cki.Key)
                         {
                             // Search by title
                             case ConsoleKey.T:
-                                Console.WriteLine("Enter the Title");
+                                MessageShow("Enter the Title");
                                 Recipe recipeSearchTitle = fromMom.LookupByTitle(Console.ReadLine());
                                 if (recipeSearchTitle != null)
                                     Console.WriteLine(fromMom.SearchResult(recipeSearchTitle));
                                 break;
                             // Search by keywords
                             case ConsoleKey.K:
-                                Console.WriteLine("Enter the Keyword");
-                                Recipe[] recipeSearchKeyword = fromMom.LookupByKeyword(Console.ReadLine());
+                                MessageShow("Enter the Keyword");
+                                List<Recipe> recipeSearchKeyword = fromMom.LookupByKeyword(Console.ReadLine());
                                 if (recipeSearchKeyword != null)
                                     foreach (Recipe recipe in recipeSearchKeyword)
                                     {
@@ -160,8 +68,8 @@ namespace Assignment5
                                 break;
                             // search by cuisine
                             case ConsoleKey.C:
-                                Console.WriteLine("Enter the Cuisine");
-                                Recipe[] recipeSearchCuisine = fromMom.LookupByCuisine(Console.ReadLine());
+                                MessageShow("Enter the Cuisine");
+                                List<Recipe> recipeSearchCuisine = fromMom.LookupByCuisine(Console.ReadLine());
                                 if (recipeSearchCuisine != null)
                                     foreach (Recipe recipe in recipeSearchCuisine)
                                     {
@@ -171,63 +79,23 @@ namespace Assignment5
                                     }
                                 break;
                             default:
-                                Console.WriteLine($"Invalid Key: {cki.KeyChar}");
+                                MessageShow($"Invalid Key: {cki.KeyChar}");
                                 break;
                         }
                         break;
                     // Show list of recipes
                     case ConsoleKey.L:
                         Console.Clear();
-                        Console.WriteLine("List of Recipes\n");
+                        MessageShow("List of Recipes\n");
                         fromMom.ListShow();
-                        Console.WriteLine("Press E(dit) or another ke to continue");
+                        MessageShow("Press E(dit) or another ke to continue");
                         cki = Console.ReadKey();
                         if (cki.Key == ConsoleKey.E)
                         {
-                            Console.WriteLine("Enter the recipe number");
-                            int editNum = 0;
-                            isValid = false;
-                            // gets an input until user enters a valid number
-                            do
-                            {
-                                try
-                                {
-                                    editNum = int.Parse(Console.ReadLine());
-                                    Console.Clear();
-                                    if (editNum > 0 && editNum <= fromMom.RecipeCount())
-                                        isValid = true;
-                                    else
-                                    {
-                                        fromMom.ListShow();
-                                        Console.WriteLine("\nPlease select a number from list above");
-                                    }
-                                }
-                                catch
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("Please enter a valid number!");
-                                }
-                            } while (isValid == false);
+                            TryReadRecNum(fromMom, ref editNum);
                             Console.Clear();
-                            Console.WriteLine(fromMom.SearchResult(fromMom.RecipeList[editNum - 1]));
-                            Console.WriteLine("\nTo update the serving count enter a new one");
-                            isValid = false;
-                            // gets an input until user enters a valid number
-                            do
-                            {
-                                try
-                                {
-                                    fromMom.RecipeList[editNum - 1].UpdateServingCount(int.Parse(Console.ReadLine()));
-                                    isValid = true;
-                                }
-                                catch
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("Please enter a valid number!");
-                                }
-                            } while (isValid == false);
-                            //fromMom.RecipeList[editNum - 1].UpdateServingCount(int.Parse(Console.ReadLine()));
-                            Console.WriteLine("Recipe edited successfully!");
+                            MessageShow(fromMom.SearchResult(fromMom.RecipeList[editNum - 1]));
+                            TryUpdateServingCount(fromMom, ref editNum);
                         }
                         else
                             Console.Clear();
@@ -240,20 +108,242 @@ namespace Assignment5
                         fromMom.Load(Recipe.RecipeFilePath);
                         break;
                     case ConsoleKey.Escape:
-                        Console.WriteLine("Esc");
+                        MessageShow("Esc");
                         break;
                     default:
-                        Console.WriteLine($"Invalid Key: {cki.KeyChar}");
+                        MessageShow($"Invalid Key: {cki.KeyChar}");
                         break;
                 }
 
-                Console.WriteLine("Press any key to continue, Esc to exit");
+                MessageShow("Press any key to continue, Esc to exit");
                 cki = Console.ReadKey();
                 Console.Clear();
             }
             while (cki.Key != ConsoleKey.Escape);
         }
+        /// <summary>
+        /// Writes a message on console
+        /// </summary>
+        /// <param name="message">message string</param>
+        public static void MessageShow(string message)
+        {
+            Console.WriteLine(message);
+        }
 
+        /// <summary>
+        /// tries to read a valid number for ingredient count
+        /// </summary>
+        /// <param name="ingCount"></param>
+        /// <param name="isTest"></param>
+        public static void TryReadIngredientsCount(ref int ingCount ,bool isTest = false)
+        {
+            MessageShow("How many ingredients will you need?");
+            
+            // A flag to check if user has enterd a valid number
+            bool isValid = false;
+            // gets an input until user enters a valid number
+            do
+            {
+                try
+                {
+                    ingCount = int.Parse(Console.ReadLine());
+                    if (!isTest) Console.Clear();
+                    // Make sure that user enters a positive number
+                    if (ingCount > 0)
+                        isValid = true;
+                    else
+                        MessageShow("The Recipe needs at least 1 ingredient");
+                }
+                catch
+                {
+                    if (!isTest) Console.Clear();
+                    MessageShow("Please enter a valid number!");
+                }
+            } while (isValid == false && isTest == false);
+        }
 
+        /// <summary>
+        /// tries to get a valid number for serving count
+        /// </summary>
+        /// <param name="serveCount"></param>
+        /// <param name="isTest"></param>
+        public static void TryReadServingCount(ref int serveCount ,bool isTest = false)
+        {
+            MessageShow("How many people is this recipe going to serve?");
+            bool isValid = false;
+            // gets an input until user enters a valid number
+            do
+            {
+                try
+                {
+                    serveCount = int.Parse(Console.ReadLine());
+                    isValid = true;
+                }
+                catch
+                {
+                    if (!isTest) Console.Clear();
+                    MessageShow("Please enter a valid number!");
+                }
+            } while (isValid == false && isTest == false);
+
+        }
+
+        /// <summary>
+        /// tries to get a valid number for ingredient quantity
+        /// </summary>
+        /// <param name="ing"></param>
+        /// <param name="isTest"></param>
+        public static void TryReadIngredientQuantity(Ingredient ing ,bool isTest = false)
+        {
+            MessageShow("Enter the Quantity");
+            bool isValid = false;
+            // gets an input until user enters a valid number
+            do
+            {
+                try
+                {
+                    ing.Quantity = double.Parse(Console.ReadLine());
+                    isValid = true;
+                }
+                catch
+                {
+                    if (!isTest) Console.Clear();
+                    MessageShow("Please enter a valid number!");
+                }
+            } while (isValid == false && isTest == false);
+        }
+
+        /// <summary>
+        /// tries to get a valid number for recipe in list
+        /// </summary>
+        /// <param name="recBook"></param>
+        /// <param name="recNum"></param>
+        /// <param name="isTest"></param>
+        public static void TryReadRecNum(RecipeBook recBook, ref int recNum, bool isTest = false)
+        {
+            MessageShow("Enter the recipe number");
+            bool isValid = false;
+            // gets an input until user enters a valid number
+            do
+            {
+                try
+                {
+                    recNum = int.Parse(Console.ReadLine());
+                    if (!isTest) Console.Clear();
+                    if (recNum > 0 && recNum <= recBook.RecipeList.Count)
+                        isValid = true;
+                    else
+                    {
+                        recBook.ListShow();
+                        MessageShow("\nPlease select a number from list above");
+                    }
+                }
+                catch
+                {
+                    if (!isTest) Console.Clear();
+                    MessageShow("Please enter a valid number!");
+                }
+            } while (isValid == false && isTest == false);
+        }
+
+        /// <summary>
+        /// tries to get a valid number for new srving count
+        /// </summary>
+        /// <param name="recBook"></param>
+        /// <param name="editNum"></param>
+        /// <param name="isTest"></param>
+        public static void TryUpdateServingCount(RecipeBook recBook, ref int editNum, bool isTest = false)
+        {
+            MessageShow("\nTo update the serving count enter a new one");
+            bool isValid = false;
+            // gets an input until user enters a valid number
+            do
+            {
+                try
+                {
+                    recBook.RecipeList[editNum - 1].UpdateServingCount(int.Parse(Console.ReadLine()));
+                    isValid = true;
+                }
+                catch
+                {
+                    if (!isTest) Console.Clear();
+                    MessageShow("Please enter a valid number!");
+                }
+            } while (isValid == false && isTest == false);
+            //fromMom.RecipeList[editNum - 1].UpdateServingCount(int.Parse(Console.ReadLine()));
+            MessageShow("Recipe edited successfully!");
+        }
+
+        /// <summary>
+        /// gets fields of an ingredient and make one then add it to recipe
+        /// </summary>
+        /// <param name="recTemp"></param>
+        /// <param name="ingTemp"></param>
+        /// <param name="cki"></param>
+        /// <param name="ingredientsCountTemp"></param>
+        /// <param name="isTest"></param>
+        public static void GetIngredient(Recipe recTemp ,Ingredient ingTemp ,ConsoleKeyInfo cki , int ingredientsCountTemp, bool isTest = false)
+        {
+            int ingCounter = ingredientsCountTemp;
+            do
+            {
+                if (!isTest) Console.Clear();
+                ingTemp = new Ingredient();
+                MessageShow("Make New Ingredient \nEnter a Name");
+                ingTemp.Name = Console.ReadLine();
+                if (!isTest) Console.Clear();
+                MessageShow("Enter the Description, please!");
+                ingTemp.Description = Console.ReadLine();
+                if (!isTest) Console.Clear();
+                TryReadIngredientQuantity(ingTemp);
+                if (!isTest) Console.Clear();
+                MessageShow("Enter the Unit");
+                ingTemp.Unit = Console.ReadLine();
+                if (!isTest) Console.Clear();
+                recTemp.AddIngredient(ingTemp);
+                MessageShow($"{ingTemp.Name} has been added to your ingredients list");
+                ingCounter--;
+                MessageShow($"{ingCounter} Remaining \n");
+                MessageShow("Press any key to continue");
+                if (!isTest) cki = Console.ReadKey();
+            } while (ingCounter > 0);
+        }
+
+        /// <summary>
+        /// gets fields of a recipe and make one then adds it to recipe book
+        /// </summary>
+        /// <param name="fromMom"></param>
+        /// <param name="recipeTemp"></param>
+        /// <param name="ingTemp"></param>
+        /// <param name="ingCountTemp"></param>
+        /// <param name="servCountTemp"></param>
+        /// <param name="cki"></param>
+        /// <param name="isTest"></param>
+        public static void GetRecipe(RecipeBook fromMom, Recipe recipeTemp,Ingredient ingTemp,
+            int ingCountTemp, int servCountTemp, ConsoleKeyInfo cki, bool isTest = false )
+        {
+            MessageShow("New Recipe");
+            MessageShow("Enter a Title");
+            string titleTemp = Console.ReadLine();
+            if (!isTest) Console.Clear();
+            if (!isTest) TryReadIngredientsCount(ref ingCountTemp, isTest);
+            if (!isTest) TryReadServingCount(ref servCountTemp, isTest);
+            if (!isTest) Console.Clear();
+            MessageShow("Enter the Cuisine");
+            string cuisineTemp = Console.ReadLine();
+            if (!isTest) Console.Clear();
+            MessageShow("Enter Keywords in a line \nPress enter when you are finished");
+            List<string> keywordsTemp = new List<string>();
+            keywordsTemp.AddRange(Console.ReadLine().Split());
+            recipeTemp = new Recipe(titleTemp, null, new List<Ingredient>(ingCountTemp), servCountTemp, cuisineTemp, keywordsTemp);
+            if (!isTest) GetIngredient(recipeTemp, ingTemp, cki, ingCountTemp, isTest);
+            if (!isTest) Console.Clear();
+            MessageShow("Enter the Instructions, please!");
+            recipeTemp.Instructions = Console.ReadLine();
+            if (!isTest) Console.Clear();
+            MessageShow("Recipe Added Successfully");
+            fromMom.Add(recipeTemp);
+            MessageShow(recipeTemp.ToString());
+        }
     }
 }

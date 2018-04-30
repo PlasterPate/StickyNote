@@ -11,11 +11,10 @@ namespace Assignment5
     /// </summary>
     public class Ingredient
     {
-        private static string ingFilePath = @"ingredients.txt";
-        private string name;
-        private string description;
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Unit { get; set; }
         private double quantity;
-        private string unit;
         /// <summary>
         /// ایجاد شئ مشخصات یکی از مواد اولیه دستور غذا
         /// </summary>
@@ -25,13 +24,24 @@ namespace Assignment5
         /// <param name="unit">واحد مقدار</param>
         public Ingredient(string name, string description, double quantity, string unit)
         {
-            this.name = name;
-            this.description = description;
-            this.quantity = quantity;
-            this.unit = unit;
-            // بر عهده دانشجو
+            Name = name;
+            Description = description;
+            Quantity = quantity;
+            Unit = unit;
         }
 
+        /// <summary>
+        /// ایجاد شئ مشخصات یکی از مواد اولیه دستور غذا
+        /// </summary>
+        public Ingredient()
+        {
+
+        }
+
+        /// <summary>
+        /// write ingredient specifications on file
+        /// </summary>
+        /// <param name="writer"></param>
         public void Serialize(StreamWriter writer)
         {
             writer.WriteLine(Name);
@@ -40,6 +50,11 @@ namespace Assignment5
             writer.WriteLine(Unit);
         }
 
+        /// <summary>
+        /// read ingredient specifications from a file
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         public static Ingredient Deserialize(StreamReader reader)
         {
             string name = reader.ReadLine();
@@ -48,48 +63,6 @@ namespace Assignment5
             string unit = reader.ReadLine();
             Ingredient ing = new Ingredient(name, des, quantity, unit);
             return ing;
-        }
-
-        public static string IngFilePath
-        {
-            get
-            {
-                return ingFilePath;
-            }
-            set
-            {
-                return;
-            }
-        }
-
-        /// <summary>
-        /// نام ماده اولیه
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
-        }
-
-        /// <summary>
-        /// توضیح: از کجا پیدا کنیم یا اگر نداشتیم جایگزین چه چیزی استفاده کنیم
-        /// </summary>
-        public string Description
-        {
-            get
-            {
-                return description;
-            }
-            set
-            {
-                description = value;
-            }
         }
 
         /// <summary>
@@ -109,29 +82,13 @@ namespace Assignment5
                     quantity = 0;
             }
         }
-
-        /// <summary>
-        /// واحد مقدار: مثلا گرم، کیلوگرم، عدد
-        /// </summary>
-        public string Unit
-        {
-            get
-            {
-                return unit;
-            }
-            set
-            {
-                unit = value;
-            }
-        }
-
         /// <summary>
         /// تبدیل به متن
         /// </summary>
         /// <returns>متن معادل برای این ماده اولیه - قابل استفاده برای چاپ در خروجی</returns>
         public override string ToString()
         {
-            return $"{Name}:\t{Quantity} {Unit} - {Description}";
+            return $"{Name}: {Quantity} {Unit} - {Description}";
         }
     }
 }
