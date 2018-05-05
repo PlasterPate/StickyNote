@@ -11,13 +11,14 @@ namespace Assignment5
     /// </summary>
     public class Recipe
     {
-        private static string recipeFilePath = @"recipes.txt";
-        private string title;
-        private string instructions;
+        public static string RecipeFilePath = @"recipes.txt";
+        public string Title { get; set; }
+        public string Instructions { get; set; }
         private int ingredientCount;
         private int servingCount;
-        private string cuisine;
-        private string[] keywords;
+        public string Cuisine { get; set; }
+        public List<string> Keywords { get; set; }
+        public List<Ingredient> IngredientsList { get; set; }
         /// <summary>
         /// ایجاد دستور پخت جدید
         /// </summary>
@@ -27,21 +28,16 @@ namespace Assignment5
         /// <param name="servingCount">تعداد افراد</param>
         /// <param name="cuisine">سبک غذا</param>
         /// <param name="keywords">کلمات کلیدی</param>
-        public Recipe(string title, string instructions, Ingredient[] ingredients, int servingCount, string cuisine, string[] keywords)
+        public Recipe(string title, string instructions, List<Ingredient> ingredients, int servingCount, string cuisine, List<string> keywords)
         {
-            this.title = title;
-            this.instructions = instructions;
-            Ingredients = new List<Ingredient>();
-            Ingredients.AddRange(ingredients);
+            Title = title;
+            Instructions = instructions;
+            IngredientsList = new List<Ingredient>();
+            IngredientsList.AddRange(ingredients);
             this.servingCount = servingCount;
-            this.cuisine = cuisine;
-            this.keywords = new string[keywords.Length];
-            for (int i = 0; i < keywords.Length && keywords[i] != null; i++)
-            {
-                this.keywords[i] = keywords[i];
+            Cuisine = cuisine;
+            Keywords = new List<string>(keywords);
             }
-
-        }
 
         /// <summary>
         /// ایجاد شئ دستور پخت جدید
@@ -52,19 +48,15 @@ namespace Assignment5
         /// <param name="servingCount">تعداد افراد</param>
         /// <param name="cuisine">سبک غذا</param>
         /// <param name="keywords">کلمات کلیدی</param>
-        public Recipe(string title, string instructions, int ingredientCount, int servingCount, string cuisine, string[] keywords)
+        public Recipe(string title, string instructions, int ingredientCount, int servingCount, string cuisine, List<string> keywords)
         {
-            this.title = title;
-            this.instructions = instructions;
+            Title = title;
+            Instructions = instructions;
             this.ingredientCount = ingredientCount;
-            Ingredients = new List<Ingredient>();
+            IngredientsList = new List<Ingredient>();
             this.servingCount = servingCount;
-            this.cuisine = cuisine;
-            this.keywords = new string[keywords.Length];
-            for (int i = 0; i < keywords.Length; i++)
-            {
-                this.keywords[i] = keywords[i];
-            }
+            Cuisine = cuisine;
+            Keywords = new List<string>(keywords);
         }
 
         /// <summary>
@@ -72,8 +64,8 @@ namespace Assignment5
         /// </summary>
         public Recipe()
         {
-            Ingredients = new List<Ingredient>();
-            Keywords = new string[0];
+            IngredientsList = new List<Ingredient>();
+            Keywords = new List<string>();
         }
 
         /// <summary>
@@ -83,7 +75,7 @@ namespace Assignment5
         /// <returns>عمل اضافه کردن موفقیت آمیز انجام شد یا خیر. در صورت تکمیل ظرفیت مقدار برگشتی "خیر" میباشد.</returns>
         public bool AddIngredient(Ingredient ingredient)
         {
-            Ingredients.Add(ingredient);
+            IngredientsList.Add(ingredient);
             return true;
         }
 
@@ -96,7 +88,7 @@ namespace Assignment5
         {
             if (LookupByName(name) != null)
             {
-                Ingredients.Remove(LookupByName(name));
+                IngredientsList.Remove(LookupByName(name));
                 return true;
             }
             return false;
@@ -109,43 +101,23 @@ namespace Assignment5
         /// <param name="newServingCount">تعداد افراد جدید</param>
         public void UpdateServingCount(int newServingCount)
         {
-            for (int i = 0; i < Ingredients.Count; i++)
+            for (int i = 0; i < IngredientsList.Count; i++)
             {
-                Ingredients[i].Quantity *= newServingCount / ServingCount;
+                IngredientsList[i].Quantity *= (double)newServingCount / ServingCount;
             }
             ServingCount = newServingCount;
-        }
-
-        /// <summary>
-        /// فیلد پیشتیبان برای Ingredients.
-        /// </summary>
-        private List<Ingredient> ingredients;
-
-        /// <summary>
-        /// مواد اولیه
-        /// </summary>
-        public List<Ingredient> Ingredients
-        {
-            get
-            {
-                return ingredients;
-            }
-            private set
-            {
-                ingredients = value;
-            }
         }
 
         /// <summary>
         /// lists ingredients in a line
         /// </summary>
         /// <returns>joined titles in a string</returns>
-        public string IngredientsList()
+        public string IngredientsJoin()
         {
-            string[] ingredientsNames = new string[Ingredients.Count];
-            for (int i = 0; i < Ingredients.Count && Ingredients[i] != null ; i++)
+            List<string> ingredientsNames = new List<string>(IngredientsList.Count);
+            for (int i = 0; i < IngredientsList.Count && IngredientsList[i] != null ; i++)
             {
-                ingredientsNames[i] = Ingredients[i].Name;
+                ingredientsNames.Add(IngredientsList[i].Name);
             }
             return String.Join(", ", ingredientsNames);
         }
@@ -158,7 +130,7 @@ namespace Assignment5
         {
             return $"{Title}\n" +
                 $"cuisine: {Cuisine}\n" +
-                $"ingredients: {IngredientsList()}\n" +
+                $"ingredients: {IngredientsJoin()}\n" +
                 $"{Instructions}";
         }
 
@@ -170,13 +142,12 @@ namespace Assignment5
         {
             writer.WriteLine(Title);
             writer.WriteLine(Instructions);
-            writer.WriteLine(Ingredients.Count);
-            
-                foreach(Ingredient ing in Ingredients)
-                {
-                    if (ing != null)
-                        ing.Serialize(writer);
-                }
+            writer.WriteLine(IngredientsList.Count);
+            foreach(Ingredient ing in IngredientsList)
+            {
+                if (ing != null)
+                    ing.Serialize(writer);
+            }
             writer.WriteLine(ServingCount);
             writer.WriteLine(Cuisine);
             writer.WriteLine(String.Join(" ", Keywords));
@@ -189,20 +160,22 @@ namespace Assignment5
         /// <returns></returns>
         public static Recipe Deserialize(StreamReader reader)
         {
-            string title = reader.ReadLine();
-            if (title == null)
+            string title ;
+            if ((title = reader.ReadLine()) == null)
                 return null;
             string inst = reader.ReadLine();
             int ingCount = int.Parse(reader.ReadLine());
-            Ingredient[] ings = new Ingredient[ingCount];
+            List<Ingredient> ings = new List<Ingredient>(ingCount);
             
                 for(int i = 0; i < ingCount; i++)
                 {
-                    ings[i] = Ingredient.Deserialize(reader);
+                    ings.Add(Ingredient.Deserialize(reader));
                 }
             int servCount = int.Parse(reader.ReadLine());
             string cuis = reader.ReadLine();
-            string[] keywords = reader.ReadLine().Split();
+            List<string> keywords = new List<string>();
+            keywords.AddRange(reader.ReadLine().Split());
+            
             Recipe rec = new Recipe(title, inst, ings, servCount, cuis, keywords);
             return rec;
         }
@@ -214,49 +187,14 @@ namespace Assignment5
         /// <returns>ingredient object</returns>
         public Ingredient LookupByName(string name)
         {
-            for(int i = 0; i< Ingredients.Count && Ingredients[i] != null; i++)
+            for(int i = 0; i< IngredientsList.Count && IngredientsList[i] != null; i++)
             {
-                if (Ingredients[i].Name == name)
-                    return Ingredients[i];
+                if (IngredientsList[i].Name == name)
+                    return IngredientsList[i];
             }
             return null;
         }
 
-        public static string RecipeFilePath
-        {
-            get
-            {
-                return recipeFilePath;
-            }
-            set
-            {
-                return;
-            }
-        }
-
-        public string Title
-        {
-            get
-            {
-                return title;
-            }
-            set
-            {
-                title = value;
-            }
-        }
-
-        public string Instructions
-        {
-            get
-            {
-                return instructions;
-            }
-            set
-            {
-                instructions = value;
-            }
-        }
         public int IngredientCount
         {
             get
@@ -285,29 +223,5 @@ namespace Assignment5
                     servingCount = 0;
             }
         }
-
-        public string Cuisine
-        {
-            get
-            {
-                return cuisine;
-            }
-            set
-            {
-                cuisine = value;
-            }
-        }
-        public string[] Keywords
-        {
-            get
-            {
-                return keywords;
-            }
-            set
-            {
-                keywords = value;
-            }
-        }
-
     }
 }

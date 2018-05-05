@@ -36,10 +36,10 @@ namespace Assignment7
         {
             IngredientsListBox.Items.Clear();
             if(recipeTemp != null)
-                for (int i = 0; i < recipeTemp.Ingredients.Count && recipeTemp.Ingredients[i] != null; i++)
+                for (int i = 0; i < recipeTemp.IngredientsList.Count && recipeTemp.IngredientsList[i] != null; i++)
                 {
                     ListBoxItem item = new ListBoxItem();
-                    item.Content = recipeTemp.Ingredients[i].Name;
+                    item.Content = recipeTemp.IngredientsList[i].Name;
                     IngredientsListBox.Items.Add(item);
                 }
         }
@@ -120,7 +120,7 @@ namespace Assignment7
                     recipeTemp.Instructions = InstructionsTextBox.Text;
                     recipeTemp.ServingCount = int.Parse(ServingCountTextBox.Text);
                     recipeTemp.Cuisine = CuisineTextBox.Text;
-                    recipeTemp.Keywords = KeywordsTextBox.Text.Split();
+                    recipeTemp.Keywords.AddRange(KeywordsTextBox.Text.Split());
                 }
             }
             isAdded = true;

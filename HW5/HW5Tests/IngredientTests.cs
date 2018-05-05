@@ -27,6 +27,18 @@ namespace Assignment5.Tests
         }
 
         [TestMethod()]
+        public void IngredientTest1()
+        {
+            Ingredient ingNullConstructor = new Ingredient();
+            Assert.IsNull(ingNullConstructor.Name);
+            Assert.IsNull(ingNullConstructor.Description);
+            Assert.IsNull(ingNullConstructor.Unit);
+            Assert.AreEqual(0 ,ingNullConstructor.Quantity);
+            ingNullConstructor.Quantity = -1;
+            Assert.AreEqual(0, ingNullConstructor.Quantity);
+        }
+
+        [TestMethod()]
         public void ToStringTest()
         {
             string expectedResult = $"{name}: {quantity} {unit} - {description}";
@@ -38,11 +50,11 @@ namespace Assignment5.Tests
         {
             string ingFilePath = @"ingredientsTest.txt";
             Ingredient ingDeserialized;
-            using(StreamWriter writer = new StreamWriter(ingFilePath))
+            using (StreamWriter writer = new StreamWriter(ingFilePath))
             {
                 ingredientTest.Serialize(writer);
             }
-            using(StreamReader reader = new StreamReader(ingFilePath))
+            using (StreamReader reader = new StreamReader(ingFilePath))
             {
                 ingDeserialized = Ingredient.Deserialize(reader);
             }

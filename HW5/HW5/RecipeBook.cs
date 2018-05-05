@@ -11,9 +11,9 @@ namespace Assignment5
     /// </summary>
     public class RecipeBook
     {
-        private string title;
+        public string Title { get; set; }
         private int capacity;
-        private Recipe[] recipeList;
+        public List<Recipe> RecipeList { get; set; }
         /// <summary>
         /// ایجاد شیء کتابچه دستور غذا
         /// </summary>
@@ -21,9 +21,9 @@ namespace Assignment5
         /// <param name="capacity">ظرفیت کتابچه</param>
         public RecipeBook(string title, int capacity)
         {
-            this.title = title;
+            Title = title;
             this.capacity = capacity;
-            recipeList = new Recipe[Capacity];
+            RecipeList = new List<Recipe>(Capacity);
         }
 
         /// <summary>
@@ -33,15 +33,8 @@ namespace Assignment5
         /// <returns>آیا اضافه کردن موفقیت آمیز انجام شد؟</returns>
         public bool Add(Recipe recipe)
         {
-            for (int i = 0; i < recipeList.Length; i++)
-            {
-                if (recipeList[i] == null)
-                {
-                    recipeList[i] = recipe;
-                    return true;
-                }
-            }
-            return false;
+            RecipeList.Add(recipe);
+            return true;
         }
 
         /// <summary>
@@ -51,18 +44,11 @@ namespace Assignment5
         /// <returns>آیا حذف دستور پخت درست انجام شد؟</returns>
         public bool Remove(string recipeTitle)
         {
-            for (int i = 0; i < recipeList.Length && recipeList[i] != null; i++)
+            if (LookupByTitle(recipeTitle) != null)
             {
-                if (recipeList[i].Title == recipeTitle)
-                {
-                    for (int j = i; j < recipeList.Length - 1; j++)
-                    {
-                        recipeList[j] = recipeList[j + 1];
-                    }
-                    recipeList[recipeList.Length - 1] = null;
-                    Console.WriteLine("Recipe Deleted Successfully");
-                    return true;
-                }
+                RecipeList.Remove(LookupByTitle(recipeTitle));
+                Console.WriteLine("Recipe Deleted Successfully");
+                return true;
             }
             Console.WriteLine("No Recipes Found!");
             return false;
@@ -75,10 +61,10 @@ namespace Assignment5
         /// <returns>شیء دستور پخت</returns>
         public Recipe LookupByTitle(string title)
         {
-            for (int i = 0; i < recipeList.Length && recipeList[i] != null; i++)
+            for (int i = 0; i < RecipeList.Count && RecipeList[i] != null; i++)
             {
-                if (recipeList[i].Title == title)
-                    return recipeList[i];
+                if (RecipeList[i].Title == title)
+                    return RecipeList[i];
             }
             Console.WriteLine("No Recipes Found!");
             return null;
@@ -89,22 +75,18 @@ namespace Assignment5
         /// </summary>
         /// <param name="keyword">کلمه کلیدی</param>
         /// <returns>دستور غذاهای دارای کلمه کلیدی</returns>
-        public Recipe[] LookupByKeyword(string keyword)
+        public List<Recipe> LookupByKeyword(string keyword)
         {
-            Recipe[] keywordResult = new Recipe[recipeList.Length];
-            int counter = 0;
-            for (int i = 0; i < recipeList.Length && recipeList[i] != null; i++)
+            List<Recipe> keywordResult = new List<Recipe>();
+            for (int i = 0; i < RecipeList.Count && RecipeList[i] != null; i++)
             {
-                foreach (string _keyword in recipeList[i].Keywords)
+                foreach (string _keyword in RecipeList[i].Keywords)
                 {
                     if (_keyword == keyword)
-                    {
-                        keywordResult[counter] = recipeList[i];
-                        counter++;
-                    }
+                        keywordResult.Add(RecipeList[i]);
                 }
             }
-            if (counter > 0)
+            if (keywordResult.Count != 0)
                 return keywordResult;
             Console.WriteLine("No Recipes Found!");
             return null;
@@ -116,19 +98,17 @@ namespace Assignment5
         /// </summary>
         /// <param name="cuisine">سبک پخت</param>
         /// <returns>لیست دستور غذاهای سبک پخت داده شده</returns>
-        public Recipe[] LookupByCuisine(string cuisine)
+        public List<Recipe> LookupByCuisine(string cuisine)
         {
-            Recipe[] cuisineResult = new Recipe[recipeList.Length];
-            int counter = 0;
-            for (int i = 0; i < recipeList.Length && recipeList[i] != null; i++)
+            List<Recipe> cuisineResult = new List<Recipe>();
+            for (int i = 0; i < RecipeList.Count && RecipeList[i] != null; i++)
             {
-                if (recipeList[i].Cuisine == cuisine)
+                if (RecipeList[i].Cuisine == cuisine)
                 {
-                    cuisineResult[counter] = recipeList[i];
-                    counter++;
+                    cuisineResult.Add(RecipeList[i]);
                 }
             }
-            if (counter > 0)
+            if (cuisineResult.Count != 0)
                 return cuisineResult;
             Console.WriteLine("No Recipes Found!");
             return null;
@@ -136,14 +116,14 @@ namespace Assignment5
         /// <summary>
         /// ذخیره لیست دستور پخت غذاها در فایل
         /// </summary>
-        /// <param name="receipeFilePath">آدرس فایل</param>
-        public void Save(string receipeFilePath)
+        /// <param name="recipeFilePath">آدرس فایل</param>
+        public void Save(string recipeFilePath)
         {
-            if (receipeFilePath != string.Empty)
+            if (recipeFilePath != string.Empty)
             {
-                using (StreamWriter writer = new StreamWriter(receipeFilePath, false, Encoding.UTF8))
+                using (StreamWriter writer = new StreamWriter(recipeFilePath, false, Encoding.UTF8))
                 {
-                    writer.WriteLine(RecipeList.Length);
+                    writer.WriteLine(RecipeList.Count);
                     foreach (var r in RecipeList)
                     {
                         if (r != null)
@@ -160,47 +140,31 @@ namespace Assignment5
         /// <summary>
         /// بارگزاری اطلاعات از فایل ذخیره شده
         /// </summary>
-        /// <param name="receipeFilePath">آدرس فایل</param>
+        /// <param name="recipeFilePath">آدرس فایل</param>
         /// <returns>آیا بارگزاری با موفقیت انجام شد؟</returns>
-        public bool Load(string receipeFilePath)
+        public bool Load(string recipeFilePath)
         {
-            if (!File.Exists(receipeFilePath))
+            if (!File.Exists(recipeFilePath) || new FileInfo(recipeFilePath).Length == 0)
             {
                 Console.WriteLine("\nThere is nothing to load!\n");
                 return false;
             }
 
-            using (StreamReader reader = new StreamReader(receipeFilePath))
+            using (StreamReader reader = new StreamReader(recipeFilePath))
             {
                 int recipeCount = int.Parse(reader.ReadLine());
-                RecipeList = new Recipe[recipeCount];
+                RecipeList = new List<Recipe>(recipeCount);
 
-                for (int i = 0; i < this.RecipeList.Length; i++)
+                for (int i = 0; i < recipeCount; i++)
                 {
                     Recipe r = Recipe.Deserialize(reader);
-                    if (null == r)
-                    {
-                        // Deserialize returns null if it reaches end of file.
-                        break;
-                    }
-                    this.RecipeList[i] = r;
+                    this.RecipeList.Add(r);
                 }
             }
             Console.WriteLine("\nRecipes loaded successfuly!\n");
             return true;
         }
 
-        public Recipe[] RecipeList
-        {
-            get
-            {
-                return recipeList;
-            }
-            set
-            {
-                recipeList = value;
-            }
-        }
         /// <summary>
         /// show a summary of a recipe's specifications
         /// </summary>
@@ -209,7 +173,7 @@ namespace Assignment5
         public string SearchResult(Recipe recipe)
         {
             return $"\nTitle: {recipe.Title}\n" +
-                $"Ingredients: {recipe.IngredientsList()}\n" +
+                $"Ingredients: {recipe.IngredientsJoin()}\n" +
                 $"Serving count: {recipe.ServingCount}\n" +
                 $"Cuisine: {recipe.Cuisine}\n" +
                 $"Instructions: {recipe.Instructions}";
@@ -217,35 +181,13 @@ namespace Assignment5
 
         public void ListShow()
         {
-            for (int i = 0; RecipeList[i] != null; i++)
+            for (int i = 0; i< RecipeList.Count && RecipeList[i] != null; i++)
             {
                 Console.WriteLine($"{i + 1}.{RecipeList[i].Title}");
             }
-            if (RecipeList[0] == null)
+            if (RecipeList.Count == 0)
                 Console.WriteLine("Empty!");
             Console.WriteLine();
-        }
-
-        public int RecipeCount()
-        {
-            int i = 0;
-            while(i < recipeList.Length && RecipeList[i] != null)
-            {
-                i++;
-            }
-            return i;
-        }
-
-        public string Title
-        {
-            get
-            {
-                return title;
-            }
-            set
-            {
-                title = value;
-            }
         }
 
         public int Capacity

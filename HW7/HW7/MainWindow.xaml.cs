@@ -36,8 +36,8 @@ namespace Assignment7
         private void ShowItems()
         {
             RecipeListBox.Items.Clear();
-            NothingFoundTextBox.Visibility = Visibility.Hidden;
-            for (int i = 0; i < fromAunt.RecipeList.Length && fromAunt.RecipeList[i] != null; i++)
+            NothingFoundTextBlock.Visibility = Visibility.Hidden;
+            for (int i = 0; i < fromAunt.RecipeList.Count && fromAunt.RecipeList[i] != null; i++)
             {
                 ListBoxItem item = new ListBoxItem();
                 item.Content = fromAunt.RecipeList[i].Title;
@@ -49,13 +49,13 @@ namespace Assignment7
         /// showing recipe items in list box
         /// </summary>
         /// <param name="recipeArray">recipe array to be shown</param>
-        private void ShowItems(Recipe[] recipeArray)
+        private void ShowItems(List<Recipe> recipeArray)
         {
             RecipeListBox.Items.Clear();
             if (recipeArray != null)
             {
-                NothingFoundTextBox.Visibility = Visibility.Hidden;
-                for (int i = 0; i < recipeArray.Length && recipeArray[i] != null; i++)
+                NothingFoundTextBlock.Visibility = Visibility.Hidden;
+                for (int i = 0; i < recipeArray.Count && recipeArray[i] != null; i++)
                 {
                     ListBoxItem item = new ListBoxItem();
                     item.Content = recipeArray[i].Title;
@@ -64,8 +64,7 @@ namespace Assignment7
             }
             else
             {
-                //MessageBox.Show("No Items Match your Search!");
-                NothingFoundTextBox.Visibility = Visibility.Visible;
+                NothingFoundTextBlock.Visibility = Visibility.Visible;
             }
         }
 
@@ -150,6 +149,7 @@ namespace Assignment7
                 frm.KeywordsTextBox.Text = string.Join(" ", frm.recipeTemp.Keywords);
                 frm.ShowItems();
                 frm.ShowDialog();
+                ShowItems();
             }
         }
 
@@ -196,12 +196,13 @@ namespace Assignment7
             if ((bool)TitleRadioBtn.IsChecked)
             {
                 Recipe rec = fromAunt.LookupByTitle(SearchBox.Text);
-                Recipe[] recArr = null;
+                List<Recipe> recList  = new List<Recipe>();
+                recList = null;
                 if (rec != null)
                 {
-                    recArr = new Recipe[] { rec };
+                    recList.Add(rec);
                 }
-                ShowItems(recArr);
+                ShowItems(recList);
             }
             if ((bool)KeywordRadioBtn.IsChecked)
             {
@@ -213,22 +214,43 @@ namespace Assignment7
             }
         }
 
+        /// <summary>
+        /// when main title of window is clicked, its color changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnTitle_Click(object sender, RoutedEventArgs e)
         {
             BtnTitle.Foreground = Brushes.Maroon;
         }
-
+        
+        /// <summary>
+        /// when mouse up on title search results will be cleared
+        /// and all recipes will be shown again in list box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnTitle_Release(object sender, RoutedEventArgs e)
         {
             BtnTitle.Foreground = Brushes.Red;
             ShowItems();
         }
 
+        /// <summary>
+        /// when mouse hover on recipebook title its color will be changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnTitle_MouseEnter(object sender, RoutedEventArgs e)
         {
             BtnTitle.Foreground = Brushes.Red;
         }
 
+        /// <summary>
+        /// when mouse leaves recipebook title its color changes back to black
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnTitle_MouseLeave(object sender, RoutedEventArgs e)
         {
             BtnTitle.Foreground = Brushes.Black;
