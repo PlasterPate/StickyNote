@@ -69,7 +69,7 @@ namespace Assignment5.Tests
         public void UpdateServingCountTest()
         {
             int newServingCount = 6;
-            double expectedResult = newServingCount / servingCount * quantity;
+            double expectedResult = (double)newServingCount / servingCount * quantity;
             recipeTest1.UpdateServingCount(newServingCount);
             foreach (Ingredient ing in ingredientArrayTest)
                 Assert.AreEqual(expectedResult, ing.Quantity);
