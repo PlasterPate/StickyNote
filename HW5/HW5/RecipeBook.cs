@@ -181,12 +181,15 @@ namespace Assignment5
 
         public void ListShow()
         {
+            if (RecipeList.Count == 0)
+            {
+                Console.WriteLine("Empty!");
+                return;
+            }
             for (int i = 0; i< RecipeList.Count && RecipeList[i] != null; i++)
             {
                 Console.WriteLine($"{i + 1}.{RecipeList[i].Title}");
             }
-            if (RecipeList.Count == 0)
-                Console.WriteLine("Empty!");
             Console.WriteLine();
         }
 

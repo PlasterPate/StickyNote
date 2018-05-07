@@ -165,7 +165,11 @@ namespace Assignment7
             string loadFileName = null;
             openFileDialog.ShowDialog();
             loadFileName = openFileDialog.FileName;
+            try
+            {
             fromAunt.Load(loadFileName);
+            }
+            catch { }
             ShowItems();
         }
 
