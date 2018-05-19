@@ -8,19 +8,15 @@ namespace OOCalculator
         protected Expression LHS;
         protected Expression RHS;
 
-        public BinaryOperator()
-        {
-            throw new NotImplementedException();
-        }
-
         public BinaryOperator(TextReader reader)
         {
-            throw new NotImplementedException();
+            LHS = GetNextExpression(reader);
+            RHS = GetNextExpression(reader);
         }
 
         public abstract string OperatorSymbol { get; }
 
-        public sealed override string ToString() => throw new NotImplementedException();
+        public sealed override string ToString() => $"({LHS}{OperatorSymbol}{RHS})";
 
     }
 }

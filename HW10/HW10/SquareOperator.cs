@@ -6,13 +6,14 @@ namespace OOCalculator
     public class SquareOperator : UnaryOperator
     {
         public SquareOperator(TextReader reader)
+            : base(reader)
         {
-            throw new NotImplementedException();
+            
         }
 
-        public override string OperatorSymbol => throw new NotImplementedException();
-
-        public override double Evaluate() => throw new NotImplementedException();
+        public override string OperatorSymbol => "Square";
+        
+        public override double Evaluate() => Math.Pow(Operand.Evaluate(), 2) ;
 
     }
 }

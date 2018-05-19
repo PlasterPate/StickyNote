@@ -9,11 +9,11 @@ namespace OOCalculator
 
         public NumberExpression(string line)
         {
-            throw new NotImplementedException();
+            Number = double.Parse(line);
         }
 
-        public override double Evaluate() => throw new NotImplementedException();
+        public override double Evaluate() => Number;
 
-        public override string ToString() => throw new NotImplementedException();
+        public override string ToString() => Number.ToString();
     }
 }

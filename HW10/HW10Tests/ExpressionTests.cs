@@ -25,11 +25,11 @@ namespace OOCalculator.Tests
                 "1\n" +
                 "Divide\n" +
                 "Subtract\n" +
-                "7\n" +
-                "Sqrt\n" +
+                "6\n" +
+                "SquareRoot\n" +
                 "4\n" +
                 "2";
-            string toStringResult = "-(Square((2+1)*((7-Sqrt(4))/2)))";
+            string toStringResult = "-(Square(((2+1)*((6-SquareRoot(4))/2))))";
             File.WriteAllText(filePath, fileContent);
             Expression test = Expression.BuildExpressionTree(File.OpenText(filePath));
             Assert.AreEqual(test.ToString(), toStringResult);

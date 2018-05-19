@@ -18,7 +18,7 @@ namespace OOCalculator.Tests
             string filePath = "sqrt.txt";
             File.WriteAllText(filePath, "25");
             SqrtOperator so = new SqrtOperator(File.OpenText(filePath));
-            Assert.AreEqual(so.ToString(), "Sqrt(25)");
+            Assert.AreEqual(so.ToString(), "SquareRoot(25)");
             Assert.AreEqual(so.Evaluate(), 5);
         }
     }

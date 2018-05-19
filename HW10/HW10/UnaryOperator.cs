@@ -7,17 +7,12 @@ namespace OOCalculator
     {
         protected Expression Operand;
 
-        public UnaryOperator()
-        {
-            throw new NotImplementedException();
-        }
-
         public UnaryOperator(TextReader reader)
         {
-            throw new NotImplementedException();
+            Operand = GetNextExpression(reader);
         }
 
-        public sealed override string ToString() => throw new NotImplementedException();
+        public sealed override string ToString() => $"{OperatorSymbol}({Operand})";
 
         public abstract string OperatorSymbol { get; }
     }
