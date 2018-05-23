@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW12", "HW12\HW12.csproj", "{54A561E1-F656-4A4D-9AD8-70B8A0466118}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW12Tests", "HW12Tests\HW12Tests.csproj", "{10216457-FCB1-4C77-A6E8-67B7EFFED740}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54A561E1-F656-4A4D-9AD8-70B8A0466118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54A561E1-F656-4A4D-9AD8-70B8A0466118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54A561E1-F656-4A4D-9AD8-70B8A0466118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54A561E1-F656-4A4D-9AD8-70B8A0466118}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10216457-FCB1-4C77-A6E8-67B7EFFED740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10216457-FCB1-4C77-A6E8-67B7EFFED740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10216457-FCB1-4C77-A6E8-67B7EFFED740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10216457-FCB1-4C77-A6E8-67B7EFFED740}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A4D7C9A-E77A-4700-895C-9631498F9A30}
+	EndGlobalSection
+EndGlobal
