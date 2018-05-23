@@ -14,6 +14,11 @@
         public override IState EnterOperator(char c) => GoToStartState(Calc);
         public override IState EnterPoint() => GoToStartState(Calc);
 
+        /// <summary>
+        /// clears eveything and goes back to start state
+        /// </summary>
+        /// <param name="calc">state after clearing which is start state</param>
+        /// <returns></returns>
         public IState GoToStartState(Calculator calc)
         {
             calc.Clear();

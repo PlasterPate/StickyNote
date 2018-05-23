@@ -2,6 +2,10 @@
 
 namespace SimpleCalculator
 {
+    /// <summary>
+    /// هنگامی که یک رقم غیر صفر وارد کنیم ماشین حساب وارد این حالت می شود
+    /// در این حالت میتوانیم تا زمان وارد کردن عملگر به تعداد دلخواه رقم (از جمله صفر) وارد کنیم
+    /// </summary>
     public class AccumulateState : CalculatorState
     {
         public AccumulateState(Calculator calc) : base(calc) { }

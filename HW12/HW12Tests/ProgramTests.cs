@@ -37,6 +37,9 @@ namespace SimpleCalculator.Tests
         public void DivideTest() => RunTest<ComputeState>(keys: "10/2=q", expectedDisplay: "5");
 
         [TestMethod()]
+        public void PowerTest() => RunTest<ComputeState>(keys: "2^5=q", expectedDisplay: "32");
+
+        [TestMethod()]
         public void AccumulationTest() => RunTest<AccumulateState>(keys: "10000000q", expectedDisplay: "10000000");
 
         [TestMethod()]

@@ -12,7 +12,11 @@
     {
         public PointState(Calculator calc) : base(calc) { }
 
-        //#1 لطفا!
+        /// <summary>
+        ///does nothing 
+        ///because we cant have more than one point at the same time 
+        /// </summary>
+        /// <returns>point state</returns>
         public override IState EnterPoint() => this;
     }
 }

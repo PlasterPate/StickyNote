@@ -9,6 +9,12 @@ namespace SimpleCalculator
             RunCalculator(() => Console.ReadKey().KeyChar, () => Console.Clear());
         }
 
+        /// <summary>
+        /// runs the proper method depending on the character that user types
+        /// </summary>
+        /// <param name="GetKey"></param>
+        /// <param name="a"></param>
+        /// <returns></returns>
         public static Calculator RunCalculator(Func<char> GetKey, Action a)
         {
             Calculator calc = new Calculator();
