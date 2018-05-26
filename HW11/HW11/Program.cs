@@ -28,7 +28,7 @@ namespace Assignment11
             Console.WriteLine($"Percent of females who survived: {data.GetFemalesSurvivedPercent()}");
             Console.WriteLine($"Percent of survivors who were female: {data.GetSurvivedFemalesPercent()}");
             Console.WriteLine($"Percent of kids under 10 who survived: {data.GetKidsUnderTenSurvivedPercent()}");
-            Console.WriteLine($"Port of boarding with most survivors: {data.GetPortOfMostSurvivors().BoardingPort}");
+            Console.WriteLine($"Port of boarding with most survivors: {data.GetPortOfMostSurvivors()}");
             Console.WriteLine($"Port of boarding with most survivors percent: {data.GetPortOfMostSurvivorsPercent()}");
             Console.WriteLine($"The age group (age/10) with most passengers: {data.GetMostAgeGroupPassengers()}");
             Console.WriteLine($"The age group (age/10) with most survivors: {data.GetMostAgeGroupSurvivors()}");
@@ -147,8 +147,8 @@ namespace Assignment11
         /// </summary>
         /// <param name="data"></param>
         /// <returns>port with most survivors</returns>
-        public static TitanicData GetPortOfMostSurvivors(this IEnumerable<TitanicData> data)
-           => data.Where(x => x.Survived).GroupBy(x => x.BoardingPort).OrderByDescending(x => x.Count()).First().First();
+        public static string GetPortOfMostSurvivors(this IEnumerable<TitanicData> data)
+           => data.Where(x => x.Survived).GroupBy(x => x.BoardingPort).OrderByDescending(x => x.Count()).First().Key;
 
         /// <summary>
         /// find the port which had the most survivors percent
