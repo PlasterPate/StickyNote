@@ -1,0 +1,18 @@
+﻿<Window x:Class="Ui.ColorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ui"
+        mc:Ignorable="d"
+        Title="ColorWindow" Height="50" Width="287" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="Manual" Top="-200">
+    <Grid Margin="0,0,0,-0.4">
+        <Ellipse x:Name="YellowBtn" Fill="#FFFFB901" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="40" Margin="3,4,0,0" Cursor="Hand" MouseEnter="YellowBtn_MouseEnter" MouseLeave="YellowBtn_MouseLeave" MouseUp="YellowBtn_MouseUp"/>
+        <Ellipse x:Name="GreenBtn" Fill="#118905" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="40" Margin="51,4,0,0" Cursor="Hand" MouseEnter="GreenBtn_MouseEnter" MouseLeave="GreenBtn_MouseLeave" MouseUp="GreenBtn_MouseUp"/>
+        <Ellipse x:Name="BlueBtn" Fill="#0179d7" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="40" Margin="99,4,0,0" Cursor="Hand" MouseEnter="BlueBtn_MouseEnter" MouseLeave="BlueBtn_MouseLeave" MouseUp="BlueBtn_MouseUp"/>
+        <Ellipse x:Name="PurpleBtn" Fill="#5d249b" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="40" Margin="148,4,0,0" Cursor="Hand" MouseEnter="PurpleBtn_MouseEnter" MouseLeave="PurpleBtn_MouseLeave" MouseUp="PurpleBtn_MouseUp"/>
+        <Ellipse x:Name="PinkBtn" Fill="#d901a9" Height="40" VerticalAlignment="Top" Margin="197,4,0,0" Cursor="Hand" MouseEnter="PinkBtn_MouseEnter" HorizontalAlignment="Left" Width="40" MouseLeave="PinkBtn_MouseLeave" MouseUp="PinkBtn_MouseUp"/>
+        <Ellipse x:Name="GrayBtn" Fill="#777777" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="40" Margin="245,4,0,0" Cursor="Hand" MouseEnter="GrayBtn_MouseEnter" MouseLeave="GrayBtn_MouseLeave" MouseUp="GrayBtn_MouseUp"/>
+
+    </Grid>
+</Window>
