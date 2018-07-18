@@ -67,6 +67,7 @@ namespace Ui
             frm.ShowDialog();
             if ((bool)frm.DialogResult)
                 if (noteLogic.noteRepository.Find(frm.note.Title) != null)
+                {
                     for (int i = 1; true; i++)
                     {
                         if (noteLogic.noteRepository.Find(frm.note.Title + $"({i})") == null)
@@ -76,6 +77,12 @@ namespace Ui
                             break;
                         }
                     }
+                }
+                else
+                {
+                    noteLogic.AddNote(frm.note);
+                }
+            
             ShowItems();
         }
 
